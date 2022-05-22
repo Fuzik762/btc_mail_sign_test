@@ -1,10 +1,24 @@
-<template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<template lang='pug'>
+component(:is='layout')
+  router-view
 </template>
+
+<script>
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import DashboardLayout from '@/layouts/DashboardLayout.vue';
+
+export default {
+  components: {
+    AuthLayout,
+    DashboardLayout,
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'auth-layout';
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
@@ -15,16 +29,4 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
