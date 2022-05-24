@@ -1,0 +1,21 @@
+.login {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 344px;
+    min-height: 300px;
+  }
+  &__header {
+    &-text {
+      font-family: "Inter", "sans-serif";
+      font-size: 30px;
+      font-weight: 700;
+      color: $indigo-dark;
+    }
+  }
+  &__submit {
+    align-self: flex-end;
+  }
+}

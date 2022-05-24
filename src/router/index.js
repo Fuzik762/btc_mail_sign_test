@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AuthView from '../views/AuthView.vue';
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    meta: { layout: 'auth-layout' },
-    component: AuthView,
+    path: '/list-employee',
+    name: 'ListEmployee',
+    meta: {layout: 'dashboard-layout'},
+    component: () => import('../views/ListEmployee.vue')
+  },
+  {
+    path: '/login',
+    name: 'AuthLogin',
+    meta: {layout: 'auth-layout'},
+    component: () => import('../views/AuthView.vue')
   },
 ];
 

@@ -1,20 +1,12 @@
-<template lang='pug'>
-<Login />
+<template>
+  <AuthLogin />
 </template>
 
 <script>
-import Login from '@/components/login.vue';
+import AuthLogin from "@/components/AuthLogin.vue";
 
 export default {
-  name: 'HomeView',
-  components: { Login },
+  name: "AuthView",
+  components: { AuthLogin },
 };
 </script>
-
-<style lang="scss">
-.main__auth {
-  width: 200px;
-  height: 200px;
-  color: red;
-}
-</style>
