@@ -1,8 +1,13 @@
 <template>
   <button 
     class="btn" 
-    type="this.type"
+    :type="type"
   > 
+    <img
+      v-if="hasIcon === true"
+      class="btn__icon"
+      :src="require(`@/assets/icons/${icon}__icon.svg`)"
+    >
     {{ label }}
   </button>
 </template>
@@ -19,6 +24,14 @@ export default {
       type: String,
       default: 'Кнопка',
     },
+    icon: {
+      type: String,
+      default: "plus",
+    },
+    hasIcon: {
+      type: Boolean,
+      default: false,
+    }
   },
 };
 </script>

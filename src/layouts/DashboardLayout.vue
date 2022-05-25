@@ -81,7 +81,7 @@
       </div>
       <div class="dashboard__frame">
         <div class="dashboard__frame-content">
-          Проверка
+          <slot />
         </div>
       </div>
     </div>
