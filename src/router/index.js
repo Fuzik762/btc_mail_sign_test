@@ -5,13 +5,13 @@ const routes = [
     path: '/list-employee',
     name: 'ListEmployee',
     meta: {layout: 'dashboard-layout'},
-    component: () => import('../views/ListEmployeeView.vue')
+    component: () => import('../pages/ListEmployee.vue')
   },
   {
     path: '/login',
     name: 'AuthLogin',
     meta: {layout: 'auth-layout'},
-    component: () => import('../views/AuthView.vue')
+    component: () => import('../pages/AuthLogin.vue')
   },
 ];
 

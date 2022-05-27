@@ -3,10 +3,10 @@
     <label 
       class="input-text" 
       for="input"
-    > 
+    >
       {{ label }}
     </label>
-    <input 
+    <input
       id="input"
       class="input-inner"
       :type="type"
@@ -18,15 +18,15 @@
 
 <script>
 export default {
-  name: 'DefaultInput',
+  name: "DefaultInput",
   props: {
     type: {
       type: String,
-      default: 'text',
+      default: "text",
     },
     label: {
       type: String,
-      default: 'Название',
+      default: "Название",
     },
     required: {
       type: Boolean,
@@ -34,8 +34,26 @@ export default {
     },
     placeholder: {
       type: String,
-      default: 'Введите данные',
+      default: "Введите данные",
     },
   },
 };
 </script>
+
+<style scoped lang="scss">
+.input {
+  display: flex;
+  flex-direction: column;
+  min-width: 344px;
+  &-text {
+    @include font($font-inter, $font-reg-size, $font-medium);
+    color: $indigo-gray;
+  }
+  &-inner {
+    margin-top: 4px;
+    border: 1px solid $gray;
+    padding: 8px 14px;
+    width: 100%;
+  }
+}
+</style>

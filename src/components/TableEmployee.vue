@@ -1,0 +1,107 @@
+<template>
+  <table class="table">
+    <thead class="table__head">
+      <tr>
+        <th
+          v-for="head in tableHeaders" 
+          :key="head" 
+          class="table__head-text"
+        >
+          {{ head }}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table__content">
+      <tr 
+        v-for="employee in tableEmployee" 
+        :key="employee.id"
+      >
+        <td class="table__content-name">
+          {{ employee.name }}
+        </td>
+        <td class="table__content-company">
+          {{ employee.company }}
+        </td>
+        <td class="table__content-position">
+          {{ employee.position }}
+        </td>
+        <td class="table__content-email">
+          {{ employee.email }}
+        </td>
+        <td class="table__content-tnumber">
+          {{ employee.tnumber }}
+        </td>
+        <td 
+          class="table__content-status"
+          :class="statusColor(employee.status)"
+        >
+          {{ employee.status }}
+        </td>
+        <td class="table__content-show">
+          <router-link
+            class="table__content-show-link"
+            to="/list-employee/:id"
+          >
+            Просмотр
+          </router-link>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script>
+export default {
+  name: "TableEmployee",
+  data() {
+    return {
+      tableHeaders: ["ФИО", "КОМПАНИЯ", "ДОЛЖНОСТЬ", "ПОЧТА", "ТЕЛЕФОН", "СТАТУС", ""],
+      tableEmployee: [{name: "Фамилия Имя Отчество", company: "БТК (IT)", position: "Разработчик", email: "developer@btc.com", tnumber: "+796010202020", status: "В отпуске", id: "1"},
+        {name: "Фамилия Имя Отчество", company: "БТК (IT)", position: "Разработчик", email: "developer@btc.com", tnumber: "+796010202020", status: "Работает", id: "2"}],
+    }
+  },
+  methods: {
+    statusColor(status) {
+      if(status === 'В отпуске') return "holiday";
+      if(status === 'Уволен') return "fired";
+      return "work";
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.table {
+  padding: 20px;
+  border-spacing: 0 20px;
+  &__head {
+    &-text {
+      @include font($font-inter, $font-small-size, $font-semibold);
+      color: $deep-dark-gray;
+      text-align: left;
+    }
+  }
+  &__content {
+    &-name,
+    &-status {
+      @include font($font-inter, $font-reg-size, $font-medium);
+    }
+    &-company,
+    &-position,
+    &-email,
+    &-tnumber {
+      @include font($font-inter, $font-reg-size, $font-regular);
+      color: $indigo-gray;
+    }
+    &-show {
+      text-align: right;
+      &-link {
+        @include font($font-inter, $font-reg-size, $font-medium);
+        text-decoration: none;
+        color: $purple;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>

@@ -42,3 +42,25 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.login {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 344px;
+    min-height: 300px;
+  }
+  &__header {
+    &-text {
+      @include font($font-inter, $font-head-size, $font-bold);
+      color: $indigo-dark;
+    }
+  }
+  &__submit {
+    align-self: flex-end;
+  }
+}
+</style>
