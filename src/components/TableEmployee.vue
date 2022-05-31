@@ -33,7 +33,7 @@
         </td>
         <td 
           class="table__content-status"
-          :class="statusColor(employee.status)"
+          :class="getStatus(employee.status)"
         >
           {{ employee.status }}
         </td>
@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    statusColor(status) {
+    getStatus(status) {
       if(status === 'В отпуске') return "holiday";
       if(status === 'Уволен') return "fired";
       return "work";
@@ -76,29 +76,29 @@ export default {
   border-spacing: 0 20px;
   &__head {
     &-text {
-      @include font($font-inter, $font-small-size, $font-semibold);
-      color: $deep-dark-gray;
+      @include m.font(v.$font-inter, v.$font-small-size, v.$font-semibold);
+      color: c.$deep-dark-gray;
       text-align: left;
     }
   }
   &__content {
     &-name,
     &-status {
-      @include font($font-inter, $font-reg-size, $font-medium);
+      @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
     }
     &-company,
     &-position,
     &-email,
     &-tnumber {
-      @include font($font-inter, $font-reg-size, $font-regular);
-      color: $indigo-gray;
+      @include m.font(v.$font-inter, v.$font-reg-size, v.$font-regular);
+      color: c.$indigo-gray;
     }
     &-show {
       text-align: right;
       &-link {
-        @include font($font-inter, $font-reg-size, $font-medium);
+        @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
         text-decoration: none;
-        color: $purple;
+        color: c.$purple;
         cursor: pointer;
       }
     }

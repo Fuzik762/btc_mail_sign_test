@@ -1,18 +1,19 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require("@vue/cli-service");
+const path = require("path");
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  css: {
-    loaderOptions: {
-      scss: {
-        additionalData: `
-        @import "@/styles/global/_colors.scss";
-        @import "@/styles/global/_fonts.scss";
-        @import "@/styles/global/_mixins.scss";
-        @import "@/styles/global/_variables.scss";
-        @import "@/styles/_index.scss";
-        `
-      }
-    }
-  }
+  chainWebpack: (config) => {
+    const types = ["vue-modules", "vue", "normal-modules", "normal"];
+    types.forEach((type) => addStyleResource(config.module.rule("scss").oneOf(type)));
+  },
 });
+
+function addStyleResource(rule) {
+  rule
+    .use("sass-resources-loader")
+    .loader("sass-resources-loader")
+    .options({
+      resources: path.resolve(__dirname, "src/styles/_index.scss"),
+    });
+}

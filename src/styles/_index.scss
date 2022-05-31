@@ -1,18 +1,23 @@
+@use "global/colors" as c;
+@use "global/fonts" as f;
+@use "global/mixins" as m;
+@use "global/variables" as v;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-//status 
+ 
 .holiday {
-  color: $yellow;
+  color: c.$yellow;
 }
 
 .work {
-  color: $green;
+  color: c.$green;
 }
 
 .fired {
-  color: $dark-red;
+  color: c.$dark-red;
 }

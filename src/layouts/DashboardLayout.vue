@@ -65,7 +65,7 @@
             >
           </div>
           <div 
-            v-if="isLogout === true" 
+            v-if="isLogout" 
             class="user__toolbar-logout"
           >
             Выйти из учетной записи
@@ -89,10 +89,7 @@ export default {
   components: { IconBase, IconSignPen },
   data() {
     return {
-      isLogout: {
-        type: Boolean,
-        default: false,
-      },
+      isLogout: false,
     };
   },
 };
@@ -109,7 +106,7 @@ export default {
     height: 100vh;
     max-width: 240px;
     padding: 24px 16px;
-    background-color: $indigo-dark;
+    background-color: c.$indigo-dark;
     &-logo {
       display: flex;
       justify-content: flex-start;
@@ -130,7 +127,7 @@ export default {
     padding-right: 32px;
     padding-bottom: 16px;
     padding-top: 16px;
-    border-bottom: 1px solid $gray;
+    border-bottom: 1px solid c.$gray;
     &-alert {
       cursor: pointer;
       width: 32px;
@@ -144,7 +141,7 @@ export default {
     &-content {
       width: 100%;
       height: 100%;
-      border: 1px solid $gray;
+      border: 1px solid c.$gray;
     }
   }
 }
@@ -165,14 +162,14 @@ export default {
     gap: 12px;
     cursor: pointer;
     &_active {
-      background-color: $indigo-deep-dark;
+      background-color: c.$indigo-deep-dark;
     }
   }
 
   &__link {
-    @include font($font-inter, $font-reg-size, $font-medium);
+    @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
     text-decoration: none;
-    color: $white;
+    color: c.$white;
   }
 }
 
@@ -187,23 +184,23 @@ export default {
     align-items: center;
     gap: 8px;
     &-menu {
-      @include font($font-inter, $font-reg-size, $font-medium);
-      color: $indigo-gray;
+      @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
+      color: c.$indigo-gray;
       position: relative;
       cursor: pointer;
     }
     &-logout {
-      @include font($font-inter, $font-med-size, $font-bold);
+      @include m.font(v.$font-inter, v.$font-med-size, v.$font-bold);
       cursor: pointer;
       position: absolute;
       top: 40px;
       right: 25px;
-      background-color: $white;
-      border: 1px solid $light-gray;
+      background-color: c.$white;
+      border: 1px solid c.$light-gray;
       border-radius: 6px;
       box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
       padding: 10px;
-      color: $red;
+      color: c.$red;
     }
   }
 }
@@ -211,6 +208,6 @@ export default {
 .vr {
   width: 1px;
   height: 24px;
-  background-color: $gray;
+  background-color: c.$gray;
 }
 </style>

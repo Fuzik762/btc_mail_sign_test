@@ -2,12 +2,12 @@
   <div class="input">
     <label 
       class="input-text" 
-      for="input"
+      :for="id"
     >
       {{ label }}
     </label>
     <input
-      id="input"
+      :id="id"
       class="input-inner"
       :type="type"
       :required="required"
@@ -36,6 +36,10 @@ export default {
       type: String,
       default: "Введите данные",
     },
+    id: {
+      type: String,
+      default: "input",
+    }
   },
 };
 </script>
@@ -44,16 +48,17 @@ export default {
 .input {
   display: flex;
   flex-direction: column;
-  min-width: 344px;
+  width: 100%;
+  max-width: 344px;
   &-text {
-    @include font($font-inter, $font-reg-size, $font-medium);
-    color: $indigo-gray;
+    @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
+    color: c.$indigo-gray;
   }
   &-inner {
     margin-top: 4px;
-    border: 1px solid $gray;
+    border: 1px solid c.$gray;
+    border-radius: 4px;
     padding: 8px 14px;
-    width: 100%;
   }
 }
 </style>
