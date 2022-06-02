@@ -62,6 +62,25 @@
           label="Телефон"
         />
       </DataRow>
+      <DataRow v-if="isEditPage">
+        <template #head>
+          КОНТАКТЫ
+        </template>
+        <DefaultInput
+          id="edit_status"
+          type="text"
+          :required="true"
+          placeholder="Статус"
+          label="Статус"
+        />
+        <DefaultInput
+          id="edit_holiday"
+          type="date"
+          :required="true"
+          placeholder="Дата"
+          label="В отпуске до"
+        />
+      </DataRow>
       <DataRow> 
         <template #head>
           ШАБЛОН
@@ -69,8 +88,27 @@
         <TemplateButton label="Шаблон для IT" />
         <TemplateButton label="Шаблон для строительства" />
       </DataRow>
-      <DefaultButton label="Добавить сотрудника" />
+      <DefaultButton 
+        type="submit"
+        label="Добавить сотрудника" 
+      />
     </form>
+    <div
+      v-if="isEditPage" 
+      class="employee__link"
+    >
+      <DefaultInput 
+        id="copy_link"
+        type="url"
+        label="Ссылка для вставки в письмо"
+        value="https://example.com"
+        :readonly="true"
+      />
+      <DefaultButton 
+        class="employee__link-btn"
+        label="Скопировать ссылку" 
+      />
+    </div>
   </div>
 </template>
 
@@ -91,6 +129,16 @@ export default {
     IconBackArrow,
     TemplateButton,
   },
+  data() {
+    return {
+      isEditPage: false,
+    }
+  },
+  created() {
+    if(this.$route.params.id) {
+      this.isEditPage = true;
+    }
+  }
 }
 </script>
 
@@ -117,19 +165,13 @@ export default {
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
   }
-  &__data {
+
+  &__link {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    &-head {
-      @include m.font(v.$font-inter, v.$font-small-size, v.$font-semibold);
-      color: c.$deep-dark-gray;
-    }
-    &-content {
-      display: flex;
-      gap: 24px;
+    gap: 20px;
+    &-btn {
+      width: max-content;
     }
   }
 }

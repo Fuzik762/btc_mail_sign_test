@@ -12,6 +12,8 @@
       :type="type"
       :required="required"
       :placeholder="placeholder"
+      :readonly="readonly"
+      :value="value"
     >
   </div>
 </template>
@@ -32,6 +34,10 @@ export default {
       type: Boolean,
       default: null,
     },
+    readonly: {
+      type: Boolean,
+      default: null,
+    },
     placeholder: {
       type: String,
       default: "Введите данные",
@@ -39,6 +45,10 @@ export default {
     id: {
       type: String,
       default: "input",
+    },
+    value: {
+      type: String,
+      default: null,
     }
   },
 };

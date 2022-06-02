@@ -19,6 +19,12 @@ const routes = [
     meta: {layout: 'dashboard-layout'},
     component: () => import('../pages/CreateEmployee.vue')
   },
+  {
+    path: '/edit-employee/:id',
+    name: 'EditEmployee',
+    meta: {layout: 'dashboard-layout'},
+    component: () => import('../pages/CreateEmployee.vue')
+  },
 ];
 
 const router = createRouter({
