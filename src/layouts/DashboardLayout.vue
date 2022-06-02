@@ -6,11 +6,9 @@
         width="110" 
         height="77" 
         viewBox="0 0 110 77"
-        icon-name="pen_sign" 
+        icon-name="iconSignPen" 
         icon-color="white"
-      >
-        <IconSignPen />
-      </IconBase>
+      />
       <nav class="menu">
         <ul class="menu__links">
           <li class="menu__item menu__item_active">
@@ -20,7 +18,7 @@
             >
             <router-link 
               class="menu__link" 
-              to="/list-employee"
+              :to="{name: 'ListEmployee'}"
             >
               Сотрудники
             </router-link>
@@ -32,7 +30,7 @@
             >
             <router-link 
               class="menu__link" 
-              to="/list-templates"
+              :to="{name: 'ListTemplates'}"
             >
               Шаблоны
             </router-link>
@@ -83,10 +81,9 @@
 
 <script>
 import IconBase from "@/components/ui/IconBase.vue"
-import IconSignPen from "@/components/icons/IconSignPen.vue"
 export default {
   name: "DashboardLayout",
-  components: { IconBase, IconSignPen },
+  components: { IconBase },
   data() {
     return {
       isLogout: false,
@@ -198,7 +195,7 @@ export default {
       background-color: c.$white;
       border: 1px solid c.$light-gray;
       border-radius: 6px;
-      box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: v.$dropdown-shadow;
       padding: 10px;
       color: c.$red;
     }

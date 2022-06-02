@@ -5,9 +5,8 @@
       height="44" 
       viewBox="0 0 94 44" 
       icon-color="black"
-    >
-      <IconBtcLogo />
-    </IconBase>
+      icon-name="iconBtcLogo"
+    />
     <span class="template-text">
       {{ label }}
     </span>
@@ -16,12 +15,10 @@
 
 <script>
 import IconBase from "@/components/ui/IconBase.vue"
-import IconBtcLogo from "@/components/icons/IconBtcLogo.vue"
 export default {
-  name: "DefaultInput",
+  name: "TemplateButton",
   components: {
     IconBase,
-    IconBtcLogo,
   },
   props: {
     label: {
@@ -42,7 +39,7 @@ export default {
   width: 124px;
   padding-top: 25px;
   padding-bottom: 10px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background: v.$white-to-gray;
   border: 1px solid c.$white-gray;
   border-radius: 10px;
   :focus-visible {

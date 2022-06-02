@@ -2,7 +2,7 @@
   <div class="employee__wrapper">
     <div class="employee__head">
       <router-link
-        to="/list-employee" 
+        :to="{name: 'ListEmployee'}" 
         class="employee__head-text"
       >
         <IconBase
@@ -10,9 +10,8 @@
           height="12" 
           viewBox="0 0 8 12" 
           icon-color="black"
-        >
-          <IconBackArrow />
-        </IconBase>
+          icon-name="iconBackArrow"
+        />
         Новый сотрудник
       </router-link>
     </div>
@@ -118,7 +117,6 @@ import DefaultButton from "@/components/ui/DefaultButton.vue"
 import TemplateButton from "@/components/ui/TemplateButton.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
-import IconBackArrow from "@/components/icons/IconBackArrow.vue"
 export default {
   name: "CreateEmployee",
   components: { 
@@ -126,19 +124,16 @@ export default {
     DefaultButton, 
     DataRow,
     IconBase,
-    IconBackArrow,
     TemplateButton,
   },
-  data() {
-    return {
-      isEditPage: false,
+  computed: {
+    isEditPage() {
+      if(this.$route.params.id) {
+        return true;
+      }
+      return false;
     }
   },
-  created() {
-    if(this.$route.params.id) {
-      this.isEditPage = true;
-    }
-  }
 }
 </script>
 
@@ -148,7 +143,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: calc(100% - 45px);
     padding: 16px 18px;
   }
 

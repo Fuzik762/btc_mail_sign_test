@@ -40,7 +40,7 @@
         <td class="table__content-show">
           <router-link
             class="table__content-show-link"
-            to="/list-employee/:id"
+            :to="{name: 'EditEmployee', params: {id: '123'}}"
           >
             Просмотр
           </router-link>

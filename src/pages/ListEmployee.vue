@@ -8,7 +8,7 @@
         class="employee__head-button"
         label="Добавить сотрудника"
         icon="plus"
-        @click="$router.push('/create-employee')"
+        @click="$router.push({name: 'CreateEmployee'})"
       />
     </div>
     <div class="toolbar">
@@ -42,11 +42,9 @@
               width="11" 
               height="8" 
               viewBox="0 0 11 8" 
-              icon-name="dropdown_arrow"
               icon-color="black"
-            >
-              <IconDropdownArrow />
-            </IconBase>
+              icon-name="iconDrowdownArrow"
+            />
           </div>
         </div>
         <div
@@ -108,7 +106,6 @@
 import DefaultButton from "@/components/ui/DefaultButton.vue"
 import DefaultCheckbox from "@/components/ui/DefaultCheckbox.vue"
 import IconBase from "@/components/ui/IconBase.vue"
-import IconDropdownArrow from "@/components/icons/IconDropdownArrow.vue"
 import TableEmployee from "@/components/TableEmployee.vue"
 
 export default {
@@ -118,7 +115,6 @@ export default {
     DefaultCheckbox, 
     TableEmployee, 
     IconBase, 
-    IconDropdownArrow 
   },
   data() {
     return {
@@ -198,7 +194,7 @@ export default {
     top: 20px;
     right: 10px;
     padding: 12px 24px;
-    box-shadow: 0 0 8px 0 rgba($color: #000000, $alpha: 0.25);
+    box-shadow: v.$checkbox-shadow;
     background-color: c.$white;
   }
 }

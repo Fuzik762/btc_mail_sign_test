@@ -25,6 +25,12 @@ const routes = [
     meta: {layout: 'dashboard-layout'},
     component: () => import('../pages/CreateEmployee.vue')
   },
+  {
+    path: '/list-templates',
+    name: 'ListTemplates',
+    meta: {layout: 'dashboard-layout'},
+    component: () => import('../pages/ListTemplates.vue')
+  },
 ];
 
 const router = createRouter({
