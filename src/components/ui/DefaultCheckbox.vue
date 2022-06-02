@@ -8,7 +8,7 @@
       :id="id" 
       class="checkbox-input" 
       type="checkbox" 
-      :name="group" 
+      :name="propName" 
     >
     <span class="checkbox-flag" />
     {{ label }}
@@ -19,9 +19,9 @@
 export default {
   name: "DefaultCheckbox",
   props: {
-    group: {
+    propName: {
       type: String,
-      default: "default_group",
+      default: "name",
     },
     id: {
       type: String,
