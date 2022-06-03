@@ -12,12 +12,14 @@
         Авторизация
       </h2>
     </div>
-    <DefaultInput 
+    <DefaultInput
+      id="auth_email" 
       label="Email" 
       :required="true" 
       placeholder="example@email.com" 
     />
-    <DefaultInput 
+    <DefaultInput
+      id="auth_password" 
       type="password" 
       label="Пароль" 
       :required="true" 
@@ -50,13 +52,14 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    width: 344px;
-    min-height: 300px;
+    gap: 28px;
+    max-width: 344px;
+    width: 100%;
   }
   &__header {
     &-text {
-      @include font($font-inter, $font-head-size, $font-bold);
-      color: $indigo-dark;
+      @include m.font(v.$font-inter, v.$font-head-size, v.$font-bold);
+      color: c.$indigo-dark;
     }
   }
   &__submit {

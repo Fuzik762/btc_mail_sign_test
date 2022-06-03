@@ -34,13 +34,13 @@ export default {
 
 <style scoped lang="scss">
 .btn {
-  @include font($font-inter, $font-reg-size, $font-medium);
+  @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
   display: flex;
   align-items: center;
   gap: 8px;
-  color: $white;
-  padding: 8px 10px;
-  background-color: $purple-deep;
+  color: c.$white;
+  padding: 8px 12px;
+  background-color: c.$purple-deep;
   border: none;
   border-radius: 4px;
   cursor: pointer;

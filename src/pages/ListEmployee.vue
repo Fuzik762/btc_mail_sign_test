@@ -8,6 +8,7 @@
         class="employee__head-button"
         label="Добавить сотрудника"
         icon="plus"
+        @click="$router.push({name: 'CreateEmployee'})"
       />
     </div>
     <div class="toolbar">
@@ -41,69 +42,38 @@
               width="11" 
               height="8" 
               viewBox="0 0 11 8" 
-              icon-name="dropdown_arrow"
               icon-color="black"
-            >
-              <IconDropdownArrow />
-            </IconBase>
+              icon-name="iconDrowdownArrow"
+            />
           </div>
         </div>
         <div
           v-if="showFilterMenu" 
           class="filter__menu"
-        >
-          <label
-            class="filter__menu-item"
-            for="filter_all"
-          >
-            <input
-              id="filter_all"
-              class="filter__menu-check"
-              type="checkbox"
-              name="filter" 
-            >
-            <span class="filter__menu-check_style" /> 
-            Все
-          </label>
-          <label
-            class="filter__menu-item fired"
-            for="filter_fired"
-          >
-            <input
-              id="filter_fired"
-              class="filter__menu-check"
-              type="checkbox"
-              name="filter"
-            > 
-            <span class="filter__menu-check_style" />
-            Уволен
-          </label>
-          <label
-            class="filter__menu-item holiday"
-            for="filter_holiday"
-          >
-            <input
-              id="filter_holiday"
-              class="filter__menu-check"
-              type="checkbox"
-              name="filter" 
-            > 
-            <span class="filter__menu-check_style" />
-            В отпуске
-          </label>
-          <label
-            class="filter__menu-item work"
-            for="filter_work"
-          >
-            <input
-              id="filter_work"
-              class="filter__menu-check"
-              type="checkbox"
-              name="filter" 
-            > 
-            <span class="filter__menu-check_style" />
-            Работает
-          </label>
+        > 
+          <DefaultCheckbox
+            id="filter_all"
+            prop-name="filter"
+            label="Все"
+          />
+          <DefaultCheckbox
+            id="filter_fired"
+            prop-name="filter"
+            label="Уволен"
+            text-color="fired"
+          />
+          <DefaultCheckbox
+            id="filter_holiday"
+            prop-name="filter"
+            label="В отпуске"
+            text-color="holiday"
+          />
+          <DefaultCheckbox
+            id="filter_work"
+            prop-name="filter"
+            label="Работает"
+            text-color="work"
+          />
         </div>
       </div>
     </div>
@@ -134,16 +104,17 @@
 
 <script>
 import DefaultButton from "@/components/ui/DefaultButton.vue"
-import TableEmployee from "@/components/TableEmployee.vue"
+import DefaultCheckbox from "@/components/ui/DefaultCheckbox.vue"
 import IconBase from "@/components/ui/IconBase.vue"
-import IconDropdownArrow from "@/components/icons/IconDropdownArrow.vue"
+import TableEmployee from "@/components/TableEmployee.vue"
+
 export default {
   name: "ListEmployee",
   components: { 
-    DefaultButton, 
+    DefaultButton,
+    DefaultCheckbox, 
     TableEmployee, 
     IconBase, 
-    IconDropdownArrow 
   },
   data() {
     return {
@@ -169,7 +140,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     &-text {
-      @include font($font-inter, $font-med-size, $font-semibold);
+      @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
   }
 }
@@ -195,7 +166,7 @@ export default {
     &-input {
       width: 100%;
       padding: 8px 32px;
-      border: 1px solid $gray;
+      border: 1px solid c.$gray;
       border-radius: 4px;
     }
   }
@@ -208,10 +179,10 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
-    border: 1px solid $dark-gray;
+    border: 1px solid c.$dark-gray;
     border-radius: 4px;
     padding: 6px 10px;
-    background-color: $white-gray;
+    background-color: c.$white-gray;
   }
   &__menu {
     position: absolute;
@@ -223,33 +194,8 @@ export default {
     top: 20px;
     right: 10px;
     padding: 12px 24px;
-    box-shadow: 0 0 8px 0 rgba($color: #000000, $alpha: 0.25);
-    background-color: $white;
-    &-item {
-      @include font($font-inter, $font-reg-size, $font-medium);
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-    }
-    &-check {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      clip: rect(0 0 0 0);
-      &_style {
-        &::before {
-          content: "";
-          display: block;
-          width: 14px;
-          height: 14px;
-          border: 1px solid $purple;
-          border-radius: 4px; 
-        }
-      }
-    }
-    &-check:checked + &-check_style::before {
-      background-image: url("@/assets/icons/checkbox-checked__icon.svg");
-    }
+    box-shadow: v.$checkbox-shadow;
+    background-color: c.$white;
   }
 }
 
@@ -261,10 +207,10 @@ export default {
   padding-right: 30px;
   padding-top: 16px;
   padding-bottom: 14px;
-  background-color: $deep-light-gray;
+  background-color: c.$deep-light-gray;
   &__pages {
-    @include font($font-inter, $font-small-size, $font-bold);
-    color: $black-gray;
+    @include m.font(v.$font-inter, v.$font-small-size, v.$font-bold);
+    color: c.$black-gray;
   }
   &__next-page,
   &__prev-page,
