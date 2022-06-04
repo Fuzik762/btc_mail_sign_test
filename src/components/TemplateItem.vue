@@ -5,6 +5,7 @@
         {{ templateHead }}
       </h4>
       <router-link
+        v-if="$route.meta.editTemplates"
         class="head__link" 
         :to="{ name: 'EditTemplates', params: { id: idTemplate }}"
       >

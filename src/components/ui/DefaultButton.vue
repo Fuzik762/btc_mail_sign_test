@@ -2,6 +2,7 @@
   <button 
     class="btn" 
     :type="type"
+    :class="[iconColor === 'delete' ? 'delete-btn' : '']"
   >
     <img
       v-if="icon !== ''"
@@ -28,6 +29,10 @@ export default {
       type: String,
       default: "",
     },
+    iconColor: {
+      type: String,
+      default: ""
+    },
   },
 };
 </script>
@@ -38,11 +43,16 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: max-content;
   color: c.$white;
   padding: 8px 12px;
   background-color: c.$purple-deep;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.delete-btn {
+  background-color: c.$dark-red;
 }
 </style>

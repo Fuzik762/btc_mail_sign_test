@@ -28,19 +28,19 @@ const routes = [
   {
     path: '/list-templates',
     name: 'ListTemplates',
-    meta: {layout: 'dashboard-layout'},
+    meta: {layout: 'dashboard-layout', editTemplates: true},
     component: () => import('../pages/ListTemplates.vue')
   },
   {
     path: '/edit-templates/:id',
     name: 'EditTemplates',
-    meta: {layout: 'dashboard-layout'},
+    meta: {layout: 'dashboard-layout', editTemplates: false},
     component: () => import('../pages/CreateEditTemplates.vue')
   },
   {
     path: '/create-templates',
     name: 'CreateTemplates',
-    meta: {layout: 'dashboard-layout'},
+    meta: {layout: 'dashboard-layout', editTemplates: false},
     component: () => import('../pages/CreateEditTemplates.vue')
   },
 ];
