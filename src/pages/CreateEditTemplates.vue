@@ -21,8 +21,14 @@
   </div>
   <form class="templates__form">
     <DefaultInput />
-    <DefaultTextarea label="HTML код" />
-    <TemplateItem template-head="Превью" />
+    <DefaultTextarea 
+      label="HTML код" 
+      @html-template="editTemplate($event)" 
+    />
+    <TemplateItem 
+      template-head="Превью" 
+      :html="htmlCode" 
+    />
     <DefaultButton
       type="submit" 
       label="Сохранить шаблон"
@@ -35,7 +41,7 @@ import IconBase from '@/components/ui/IconBase.vue'
 import DefaultInput from '@/components/ui/DefaultInput.vue'
 import DefaultButton from '@/components/ui/DefaultButton.vue'
 import TemplateItem from '@/components/TemplateItem.vue'
-import DefaultTextarea from '@/components/ui/DefaultTextarea.vue'
+import DefaultTextarea from '@/components/ui/TemplateTextarea.vue'
 export default {
   name: "CreateEditTemplates",
   components: {
@@ -45,6 +51,11 @@ export default {
     TemplateItem,
     DefaultTextarea,
   },
+  data() {
+    return {
+      htmlCode: null,
+    }
+  },
   computed: {
     isEditPage() {
       if(this.$route.params.id) {
@@ -53,6 +64,11 @@ export default {
       return false;
     }
   },
+  methods: {
+    editTemplate(html) {
+      this.htmlCode = html;
+    }
+  }
 }
 </script>
 
