@@ -1,5 +1,5 @@
 <template>
-  <div class="employee__wrapper">
+  <div class="employee">
     <div class="employee__head">
       <h3 class="employee__head-text">
         Сотрудники
@@ -127,13 +127,11 @@ export default {
 
 <style scoped lang="scss">
 .employee {
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    height: calc(100% - 45px);
-    padding: 16px 18px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100% - 45px);
+  padding: 16px 18px;
 
   &__head {
     display: flex;

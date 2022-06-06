@@ -1,5 +1,5 @@
 <template>
-  <div class="employee__wrapper">
+  <div class="employee">
     <div class="employee__head">
       <router-link
         :to="{name: 'ListEmployee'}" 
@@ -139,12 +139,10 @@ export default {
 
 <style lang="scss">
 .employee {
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px 18px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 18px;
 
   &__head {
     display: flex;

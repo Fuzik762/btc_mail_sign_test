@@ -1,6 +1,6 @@
 <template>
   <form 
-    class="login__form" 
+    class="login" 
     @submit.prevent="test"
   >
     <img 
@@ -47,15 +47,14 @@ export default {
 
 <style lang="scss">
 .login {
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 28px;
-    max-width: 344px;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  max-width: 344px;
+  width: 100%;
+  
   &__header {
     &-text {
       @include m.font(v.$font-inter, v.$font-head-size, v.$font-bold);
