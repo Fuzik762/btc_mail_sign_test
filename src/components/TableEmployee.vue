@@ -72,7 +72,7 @@ export default {
 
 <style scoped lang="scss">
 .table {
-  padding: 20px;
+  padding: 0px 12px;
   border-spacing: 0 20px;
   &__head {
     &-text {

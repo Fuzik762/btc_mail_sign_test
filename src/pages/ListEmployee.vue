@@ -137,7 +137,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid c.$gray;
+    padding: 16px 18px;
     &-text {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      color: c.$black;
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
   }

@@ -103,10 +103,7 @@
         value="https://example.com"
         :readonly="true"
       />
-      <DefaultButton 
-        class="employee__link-btn"
-        label="Скопировать ссылку" 
-      />
+      <DefaultButton label="Скопировать ссылку" />
     </div>
   </div>
 </template>
@@ -143,11 +140,13 @@ export default {
   flex-direction: column;
   gap: 20px;
   padding: 16px 18px;
-
+  
   &__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid c.$gray;
+    padding: 16px 18px;
     &-text {
       display: flex;
       align-items: center;
@@ -162,9 +161,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    &-btn {
-      width: max-content;
-    }
   }
 }
 </style>

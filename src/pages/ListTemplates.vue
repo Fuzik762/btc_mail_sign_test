@@ -11,6 +11,7 @@
         @click="$router.push({ name: 'CreateTemplates' })"
       />
     </div>
+  <div class="templates__inner">
     <TemplateItem />
     <TemplateItem />
   </div>
@@ -32,14 +33,27 @@ export default {
   gap: 20px;
   height: calc(100% - 45px);
   padding: 16px 18px;
-
   &__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid c.$gray;
+    padding: 16px 18px;
     &-text {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      color: c.$black;
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px 18px;
   }
 }
 </style>
