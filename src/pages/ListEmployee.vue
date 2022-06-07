@@ -154,6 +154,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 15px;
+  @media (max-width: v.$medium-screen) {
+    flex-wrap: wrap;
+  }
   &__search {
     position: relative;
     width: 100%;
