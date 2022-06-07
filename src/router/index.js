@@ -17,13 +17,13 @@ const routes = [
     path: '/employee/create',
     name: 'CreateEmployee',
     meta: {layout: 'dashboard-layout'},
-    component: () => import('../pages/CreateEditEmployee.vue')
+    component: () => import('../pages/SaveEmployee.vue')
   },
   {
     path: '/employee/edit/:id',
     name: 'EditEmployee',
     meta: {layout: 'dashboard-layout'},
-    component: () => import('../pages/CreateEditEmployee.vue')
+    component: () => import('../pages/SaveEmployee.vue')
   },
   {
     path: '/templates',
@@ -35,13 +35,13 @@ const routes = [
     path: '/templates/edit/:id',
     name: 'EditTemplates',
     meta: {layout: 'dashboard-layout', editTemplates: false},
-    component: () => import('../pages/CreateEditTemplates.vue')
+    component: () => import('../pages/SaveTemplates.vue')
   },
   {
     path: '/templates/create',
     name: 'CreateTemplates',
     meta: {layout: 'dashboard-layout', editTemplates: false},
-    component: () => import('../pages/CreateEditTemplates.vue')
+    component: () => import('../pages/SaveTemplates.vue')
   },
 ];
 

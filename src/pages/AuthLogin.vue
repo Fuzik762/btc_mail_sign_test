@@ -15,7 +15,7 @@
     </div>
     <DefaultInput
       id="auth_email"
-      prop-name="email"
+      name="email"
       type="email" 
       label="Email" 
       :required="true" 
@@ -23,7 +23,7 @@
     />
     <DefaultInput
       id="auth_password" 
-      prop-name="password"
+      name="password"
       type="password" 
       label="Пароль" 
       :required="true" 

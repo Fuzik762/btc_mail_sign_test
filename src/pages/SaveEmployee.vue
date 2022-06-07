@@ -12,7 +12,7 @@
           icon-color="black"
           icon-name="iconBackArrow"
         />
-        Новый сотрудник
+        {{ $route.params.id ? 'Редактирование сотрудника' : 'Новый сотрудник' }}
       </router-link>
     </div>
     <FormValidate 
@@ -22,11 +22,11 @@
     >
       <DataRow> 
         <template #head>
-          ОСНОВНЫЕ ДАННЫЕ
+          Оcновные данные
         </template>
         <DefaultInput
           id="create_name"
-          prop-name="name"
+          name="name"
           type="text"
           :required="true"
           placeholder="Фамилия Имя Отчество"
@@ -34,7 +34,7 @@
         />
         <DefaultInput
           id="create_company"
-          prop-name="company"
+          name="company"
           type="text"
           :required="true"
           placeholder="БТК (IT)"
@@ -42,7 +42,7 @@
         />
         <DefaultInput
           id="create_position"
-          prop-name="position"
+          name="position"
           type="text"
           :required="true"
           placeholder="Разработчик"
@@ -51,19 +51,19 @@
       </DataRow>
       <DataRow>
         <template #head>
-          КОНТАКТЫ
+          Контакты
         </template>
         <DefaultInput
           id="create_email"
-          prop-name="email"
+          name="email"
           type="email"
           :required="true"
           placeholder="Email"
           label="Email"
         />
         <DefaultInput
-          id="create_tnumber"
-          prop-name="tnumber"
+          id="create_phone"
+          name="phone"
           type="tel"
           :required="true"
           placeholder="Номер телефона"
@@ -72,19 +72,19 @@
       </DataRow>
       <DataRow v-if="isEditPage">
         <template #head>
-          КОНТАКТЫ
+          Контакты
         </template>
         <DefaultInput
           id="edit_status"
-          prop-name="status"
+          name="status"
           type="text"
           :required="true"
           placeholder="Статус"
           label="Статус"
         />
         <DefaultInput
-          id="edit_holiday"
-          prop-name="holiday"
+          id="edit_vocationEndDate"
+          name="vocationEndDate"
           type="date"
           :required="true"
           placeholder="Дата"
@@ -93,14 +93,14 @@
       </DataRow>
       <DataRow> 
         <template #head>
-          ШАБЛОН
+          Шаблон
         </template>
         <TemplateButton label="Шаблон для IT" />
         <TemplateButton label="Шаблон для строительства" />
       </DataRow>
       <DefaultButton 
         type="submit"
-        label="Добавить сотрудника" 
+        :label="$route.params.id ? 'Сохранить изменения' : 'Добавить сотрудника'" 
       />
     </FormValidate>
     <div
@@ -146,19 +146,21 @@ export default {
       company: "required|alpha_dash",
       position: "required|alpha_spaces",
       email: "required|email",
-      tnumber: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
+      phone: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
     };
 
     return {
-      schema,  
+      schema,
+      submitButton: 'Добавить сотрудника',  
     }
   },
   computed: {
     isEditPage() {
       if(this.$route.params.id) {
         return true;
-      }
-      return false;
+      } else {
+        return false;
+      } 
     }
   },
   methods: {

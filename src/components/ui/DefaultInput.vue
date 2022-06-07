@@ -10,7 +10,7 @@
       :id="id"
       class="input-inner"
       :type="type"
-      :name="propName"
+      :name="name"
       :required="required"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -18,7 +18,7 @@
     />
     <ErrorMessage 
       class="input-error"
-      :name="propName" 
+      :name="name" 
     />
   </div>
 </template>
@@ -55,7 +55,7 @@ export default {
       type: String,
       default: null,
     },
-    propName: {
+    name: {
       type: String,
       default: "defaultInput"
     },
