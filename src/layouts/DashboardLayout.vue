@@ -19,7 +19,9 @@
               class="menu__icon" 
               src="@/assets/icons/employee__icon.svg"
             >
-            Сотрудники
+            <span class="menu__link-text"> 
+              Сотрудники 
+            </span>
           </router-link>
           <router-link 
             class="menu__link" 
@@ -29,7 +31,9 @@
               class="menu__icon" 
               src="@/assets/icons/templates__icon.svg" 
             >
-            Шаблоны
+            <span class="menu__link-text">
+              Шаблоны
+            </span>
           </router-link>
         </ul>
       </nav>
@@ -91,16 +95,24 @@ export default {
 <style lang="scss">
 .dashboard {
   display: flex;
-
+  @media (max-width: v.$medium-screen) {
+    overflow: hidden;
+  }
   &__sidebar {
     width: 20%;
     height: 100vh;
     max-width: 240px;
     padding: 24px 16px;
     background-color: c.$indigo-dark;
+    @media (max-width: v.$extra-large-screen) {
+      width: auto;
+    }
     &-logo {
       display: flex;
       justify-content: flex-start;
+      @media (max-width: v.$large-screen) {
+        width: 50px;
+      }
     }
   }
 
@@ -108,6 +120,9 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+    @media (max-width: v.$medium-screen) {
+      width: 90%;
+    }
   }
 
   &__navbar {
@@ -130,6 +145,9 @@ export default {
     height: 100%;
     padding: 36px;
     background-color: c.$main-gray-bg;
+    @media (max-width: v.$medium-screen) {
+      padding: 10px;
+    }
     &-content {
       width: 100%;
       height: 100%;
@@ -152,6 +170,11 @@ export default {
     gap: 12px;
     text-decoration: none;
     color: c.$white;
+    &-text {
+      @media (max-width: v.$large-screen) {
+        display: none;
+      }
+    }
   }
 }
 

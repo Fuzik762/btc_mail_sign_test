@@ -25,6 +25,9 @@
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    @media (max-width: v.$extra-large-screen) {
+      background-position: right center;
+    }
   }
 }
 </style>

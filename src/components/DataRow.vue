@@ -29,6 +29,9 @@ export default {
   &-content {
     display: flex;
     gap: 24px;
+    @media  (max-width: v.$medium-screen) {
+      flex-wrap: wrap;
+    }
   }
 }
 </style>
