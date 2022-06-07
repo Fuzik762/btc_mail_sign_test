@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard__wrapper">
+  <div class="dashboard">
     <div class="dashboard__sidebar">
       <IconBase
         class="dashboard__sidebar-logo"
@@ -11,36 +11,26 @@
       />
       <nav class="menu">
         <ul class="menu__links">
-          <li 
-            class="menu__item"
-            :class="{ 'menu__item_active' : choosenLinkItem === 'employee'}"
+          <router-link 
+            class="menu__link" 
+            :to="{name: 'ListEmployee'}"
           >
             <img 
               class="menu__icon" 
               src="@/assets/icons/employee__icon.svg"
             >
-            <router-link 
-              class="menu__link" 
-              :to="{name: 'ListEmployee'}"
-            >
-              Сотрудники
-            </router-link>
-          </li>
-          <li 
-            class="menu__item"
-            :class="{ 'menu__item_active' : choosenLinkItem === 'templates'}"  
+            Сотрудники
+          </router-link>
+          <router-link 
+            class="menu__link" 
+            :to="{name: 'ListTemplates'}"
           >
             <img 
               class="menu__icon" 
               src="@/assets/icons/templates__icon.svg" 
             >
-            <router-link 
-              class="menu__link" 
-              :to="{name: 'ListTemplates'}"
-            >
-              Шаблоны
-            </router-link>
-          </li>
+            Шаблоны
+          </router-link>
         </ul>
       </nav>
     </div>
@@ -95,25 +85,12 @@ export default {
       isLogout: false,
     };
   },
-  computed: {
-    choosenLinkItem() {
-      if(this.$route.path.includes('employee')) {
-        return 'employee';
-      }
-      if(this.$route.path.includes('templates')) {
-        return 'templates';
-      }
-      return false;
-    },
-  },
 };
 </script>
 
 <style lang="scss">
 .dashboard {
-  &__wrapper {
-    display: flex;
-  }
+  display: flex;
 
   &__sidebar {
     width: 20%;
@@ -165,25 +142,14 @@ export default {
 .menu {
   margin-top: 24px;
 
-  &__links {
-    list-style: none;
-  }
-
-  &__item {
+  &__link {
+    @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
     width: 100%;
     padding: 8px 12px;
     text-align: left;
     display: flex;
     align-items: center;
     gap: 12px;
-    cursor: pointer;
-    &_active {
-      background-color: c.$indigo-deep-dark;
-    }
-  }
-
-  &__link {
-    @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
     text-decoration: none;
     color: c.$white;
   }
@@ -225,5 +191,9 @@ export default {
   width: 1px;
   height: 24px;
   background-color: c.$gray;
+}
+
+.router-link-active {
+  background-color: c.$indigo-deep-dark;
 }
 </style>

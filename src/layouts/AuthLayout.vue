@@ -1,5 +1,5 @@
 <template>
-  <div class="auth__wrapper">
+  <div class="auth">
     <div class="auth__content">
       <router-view />
     </div>
@@ -9,9 +9,7 @@
 
 <style lang="scss">
 .auth {
-  &__wrapper {
-    display: flex;
-  }
+  display: flex;
 
   &__content {
     width: 50%;

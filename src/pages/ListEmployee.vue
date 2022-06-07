@@ -1,16 +1,16 @@
 <template>
-  <div class="employee__head">
-    <h3 class="employee__head-text">
-      Сотрудники
-    </h3>
-    <DefaultButton
-      class="employee__head-button"
-      label="Добавить сотрудника"
-      icon="plus"
-      @click="$router.push({name: 'CreateEmployee'})"
-    />
-  </div>
-  <div class="employee__inner">
+  <div class="employee">
+    <div class="employee__head">
+      <h3 class="employee__head-text">
+        Сотрудники
+      </h3>
+      <DefaultButton
+        class="employee__head-button"
+        label="Добавить сотрудника"
+        icon="plus"
+        @click="$router.push({name: 'CreateEmployee'})"
+      />
+    </div>
     <div class="toolbar">
       <div class="toolbar__search">
         <img
@@ -127,7 +127,13 @@ export default {
 
 <style scoped lang="scss">
 .employee {
-   &__head {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100% - 45px);
+  padding: 16px 18px;
+
+  &__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -141,13 +147,6 @@ export default {
       color: c.$black;
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 90px);
-    padding: 16px 18px;
   }
 }
 

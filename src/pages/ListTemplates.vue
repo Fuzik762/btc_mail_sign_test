@@ -1,16 +1,17 @@
 <template>
-  <div class="employee__head">
-    <h3 class="employee__head-text">
-      Шаблоны
-    </h3>
-    <DefaultButton
-      class="employee__head-button"
-      label="Добавить шаблон"
-      icon="plus"
-      @click="$router.push({ name: 'CreateTemplates' })"
-    />
-  </div>
-  <div class="employee__inner">
+  <div class="templates">
+    <div class="templates__head">
+      <h3 class="templates__head-text">
+        Шаблоны
+      </h3>
+      <DefaultButton
+        class="templates__head-button"
+        label="Добавить шаблон"
+        icon="plus"
+        @click="$router.push({ name: 'CreateTemplates' })"
+      />
+    </div>
+  <div class="templates__inner">
     <TemplateItem />
     <TemplateItem />
   </div>
@@ -26,7 +27,12 @@ export default {
 </script>
 
 <style lang="scss">
-.employee {
+.templates {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100% - 45px);
+  padding: 16px 18px;
   &__head {
     display: flex;
     align-items: center;

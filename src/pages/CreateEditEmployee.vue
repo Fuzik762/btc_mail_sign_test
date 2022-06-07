@@ -1,20 +1,20 @@
 <template>
-  <div class="employee__head">
-    <router-link
-      :to="{name: 'ListEmployee'}" 
-      class="employee__head-text"
-    >
-      <IconBase
-        width="8" 
-        height="12" 
-        viewBox="0 0 8 12" 
-        icon-color="black"
-        icon-name="iconBackArrow"
-      />
-      Новый сотрудник
-    </router-link>
-  </div>
-  <div class="employee__inner">
+  <div class="employee">
+    <div class="employee__head">
+      <router-link
+        :to="{name: 'ListEmployee'}" 
+        class="employee__head-text"
+      >
+        <IconBase
+          width="8" 
+          height="12" 
+          viewBox="0 0 8 12" 
+          icon-color="black"
+          icon-name="iconBackArrow"
+        />
+        Новый сотрудник
+      </router-link>
+    </div>
     <form class="employee__form">
       <DataRow> 
         <template #head>
@@ -136,6 +136,11 @@ export default {
 
 <style lang="scss">
 .employee {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 18px;
+  
   &__head {
     display: flex;
     align-items: center;
@@ -150,13 +155,6 @@ export default {
       color: c.$black;
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px 18px;
   }
 
   &__link {
