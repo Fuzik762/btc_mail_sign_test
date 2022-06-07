@@ -11,7 +11,10 @@
       />
       <nav class="menu">
         <ul class="menu__links">
-          <li class="menu__item menu__item_active">
+          <li 
+            class="menu__item"
+            :class="{ 'menu__item_active' : choosenLinkItem === 'employee'}"
+          >
             <img 
               class="menu__icon" 
               src="@/assets/icons/employee__icon.svg"
@@ -23,7 +26,10 @@
               Сотрудники
             </router-link>
           </li>
-          <li class="menu__item">
+          <li 
+            class="menu__item"
+            :class="{ 'menu__item_active' : choosenLinkItem === 'templates'}"  
+          >
             <img 
               class="menu__icon" 
               src="@/assets/icons/templates__icon.svg" 
@@ -89,6 +95,17 @@ export default {
       isLogout: false,
     };
   },
+  computed: {
+    choosenLinkItem() {
+      if(this.$route.path.includes('employee')) {
+        return 'employee';
+      }
+      if(this.$route.path.includes('templates')) {
+        return 'templates';
+      }
+      return false;
+    },
+  },
 };
 </script>
 
@@ -135,10 +152,12 @@ export default {
   &__frame {
     height: 100%;
     padding: 36px;
+    background-color: c.$main-gray-bg;
     &-content {
       width: 100%;
       height: 100%;
       border: 1px solid c.$gray;
+      background-color: c.$white;
     }
   }
 }

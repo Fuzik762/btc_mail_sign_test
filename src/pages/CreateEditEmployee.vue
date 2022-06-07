@@ -1,20 +1,20 @@
 <template>
-  <div class="employee__wrapper">
-    <div class="employee__head">
-      <router-link
-        :to="{name: 'ListEmployee'}" 
-        class="employee__head-text"
-      >
-        <IconBase
-          width="8" 
-          height="12" 
-          viewBox="0 0 8 12" 
-          icon-color="black"
-          icon-name="iconBackArrow"
-        />
-        Новый сотрудник
-      </router-link>
-    </div>
+  <div class="employee__head">
+    <router-link
+      :to="{name: 'ListEmployee'}" 
+      class="employee__head-text"
+    >
+      <IconBase
+        width="8" 
+        height="12" 
+        viewBox="0 0 8 12" 
+        icon-color="black"
+        icon-name="iconBackArrow"
+      />
+      Новый сотрудник
+    </router-link>
+  </div>
+  <div class="employee__inner">
     <form class="employee__form">
       <DataRow> 
         <template #head>
@@ -103,10 +103,7 @@
         value="https://example.com"
         :readonly="true"
       />
-      <DefaultButton 
-        class="employee__link-btn"
-        label="Скопировать ссылку" 
-      />
+      <DefaultButton label="Скопировать ссылку" />
     </div>
   </div>
 </template>
@@ -139,17 +136,12 @@ export default {
 
 <style lang="scss">
 .employee {
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px 18px;
-  }
-
   &__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid c.$gray;
+    padding: 16px 18px;
     &-text {
       display: flex;
       align-items: center;
@@ -160,13 +152,17 @@ export default {
     }
   }
 
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px 18px;
+  }
+
   &__link {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    &-btn {
-      width: max-content;
-    }
   }
 }
 </style>
