@@ -11,7 +11,6 @@
         @click="$router.push({ name: 'CreateTemplates' })"
       />
     </div>
-  <div class="templates__inner">
     <TemplateItem />
     <TemplateItem />
   </div>
@@ -47,13 +46,6 @@ export default {
       color: c.$black;
       @include m.font(v.$font-inter, v.$font-med-size, v.$font-semibold);
     }
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 16px 18px;
   }
 }
 </style>

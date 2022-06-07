@@ -6,15 +6,20 @@
     >
       {{ label }}
     </label>
-    <input
+    <FieldValidate
       :id="id"
       class="input-inner"
       :type="type"
+      :name="propName"
       :required="required"
       :placeholder="placeholder"
       :readonly="readonly"
       :value="value"
-    >
+    />
+    <ErrorMessage 
+      class="input-error"
+      :name="propName" 
+    />
   </div>
 </template>
 
@@ -49,7 +54,11 @@ export default {
     value: {
       type: String,
       default: null,
-    }
+    },
+    propName: {
+      type: String,
+      default: "defaultInput"
+    },
   },
 };
 </script>
@@ -69,6 +78,10 @@ export default {
     border: 1px solid c.$gray;
     border-radius: 4px;
     padding: 8px 14px;
+  }
+  &-error {
+    @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);
+    margin-top: 10px;
   }
 }
 </style>
