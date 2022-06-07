@@ -11,8 +11,8 @@
         @click="$router.push({ name: 'CreateTemplates' })"
       />
     </div>
-    <TemplateItem />
-    <TemplateItem />
+    <TemplateItem  />
+    <TemplateItem  />
   </div>
 </template>
 

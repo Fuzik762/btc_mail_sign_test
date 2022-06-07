@@ -1,5 +1,7 @@
 <template>
-  <div class="template">
+  <div
+    class="template" 
+  >
     <IconBase 
       width="94" 
       height="44" 
@@ -24,7 +26,8 @@ export default {
     label: {
       type: String,
       default: "Шаблон",
-    }
+    },
+    
   },
 };
 </script>
@@ -42,9 +45,6 @@ export default {
   background: v.$white-to-gray;
   border: 1px solid c.$white-gray;
   border-radius: 10px;
-  :focus-visible {
-    outline: 4px solid c.$purple;
-  }
   &-text {
     padding-left: 15px;
     padding-right: 15px;
@@ -52,4 +52,5 @@ export default {
     color: c.$white;
   }
 }
+
 </style>

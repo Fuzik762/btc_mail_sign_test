@@ -84,8 +84,17 @@
         <template #head>
           ШАБЛОН
         </template>
-        <TemplateButton label="Шаблон для IT" />
-        <TemplateButton label="Шаблон для строительства" />
+        <TemplateButton 
+          ref="it" 
+          :class="{ active : isActive === $refs.it }"
+          @click="isActive = $refs.it"
+          label="Шаблон для IT" 
+        />
+        <TemplateButton label="Шаблон для строительства" 
+          ref="build" 
+          :class="{ active : isActive === $refs.build }"
+          @click="isActive = $refs.build"
+        />
       </DataRow>
       <DefaultButton 
         type="submit"
@@ -131,6 +140,11 @@ export default {
       return false;
     }
   },
+  data() {
+    return {
+      isActive: null,
+    }
+  },
 }
 </script>
 
@@ -162,5 +176,9 @@ export default {
     flex-direction: column;
     gap: 20px;
   }
+}
+
+.active {
+  outline: 3px solid c.$purple;
 }
 </style>
