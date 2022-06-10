@@ -11,7 +11,7 @@
         icon-color="black"
         icon-name="iconBackArrow"
       />
-      {{ $route.params.id ? 'Редактирование шаблона' : 'Новый шаблон' }}
+      {{ isEditPage ? 'Редактирование шаблона' : 'Новый шаблон' }}
     </router-link>
     <DefaultButton 
       v-if="isEditPage"

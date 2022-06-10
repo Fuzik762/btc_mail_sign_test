@@ -12,7 +12,7 @@
           icon-color="black"
           icon-name="iconBackArrow"
         />
-        {{ $route.params.id ? 'Редактирование сотрудника' : 'Новый сотрудник' }}
+        {{ isEditPage ? 'Редактирование сотрудника' : 'Новый сотрудник' }}
       </router-link>
     </div>
     <FormValidate 
@@ -100,7 +100,7 @@
       </DataRow>
       <DefaultButton 
         type="submit"
-        :label="$route.params.id ? 'Сохранить изменения' : 'Добавить сотрудника'" 
+        :label="isEditPage ? 'Сохранить изменения' : 'Добавить сотрудника'" 
       />
     </FormValidate>
     <div
@@ -158,9 +158,8 @@ export default {
     isEditPage() {
       if(this.$route.params.id) {
         return true;
-      } else {
-        return false;
-      } 
+      }
+        return false; 
     }
   },
   methods: {
