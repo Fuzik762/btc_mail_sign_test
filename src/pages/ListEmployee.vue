@@ -53,24 +53,24 @@
         > 
           <DefaultCheckbox
             id="filter_all"
-            prop-name="filter"
+            name="filter"
             label="Все"
           />
           <DefaultCheckbox
             id="filter_fired"
-            prop-name="filter"
+            name="filter"
             label="Уволен"
             text-color="fired"
           />
           <DefaultCheckbox
             id="filter_holiday"
-            prop-name="filter"
+            name="filter"
             label="В отпуске"
             text-color="holiday"
           />
           <DefaultCheckbox
             id="filter_work"
-            prop-name="filter"
+            name="filter"
             label="Работает"
             text-color="work"
           />

@@ -1,7 +1,8 @@
 <template>
-  <form 
-    class="login" 
-    @submit.prevent="test"
+  <FormValidate
+    class="login__form"
+    :validation-schema="schema" 
+    @submit="onSubmit"
   >
     <img 
       class="login__logo" 
@@ -13,13 +14,16 @@
       </h2>
     </div>
     <DefaultInput
-      id="auth_email" 
+      id="auth_email"
+      name="email"
+      type="email" 
       label="Email" 
       :required="true" 
       placeholder="example@email.com" 
     />
     <DefaultInput
       id="auth_password" 
+      name="password"
       type="password" 
       label="Пароль" 
       :required="true" 
@@ -30,31 +34,49 @@
       type="submit" 
       label="Войти" 
     />
-  </form>
+  </FormValidate>
 </template>
 
 <script>
 import DefaultInput from '@/components/ui/DefaultInput.vue';
 import DefaultButton from '@/components/ui/DefaultButton.vue';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 export default {
   name: 'AuthLogin',
   components: { DefaultInput, DefaultButton },
-  props: {
+  data() {
+    const schema = {
+        email: "required|email",
+        password: "required|min:6"
+    };
+    
+    return {
+      schema,
+    }
   },
+  methods: {
+    onSubmit() {
+      toast.success('Вы успешно вошли в систему');
+      this.$router.push({ name: 'ListEmployee' });
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 .login {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 28px;
-  max-width: 344px;
-  width: 100%;
-  
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 28px;
+    max-width: 344px;
+    width: 100%;
+  }
   &__header {
     &-text {
       @include m.font(v.$font-inter, v.$font-head-size, v.$font-bold);

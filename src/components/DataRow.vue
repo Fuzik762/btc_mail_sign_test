@@ -25,6 +25,7 @@ export default {
   &-head {
     @include m.font(v.$font-inter, v.$font-small-size, v.$font-semibold);
     color: c.$deep-dark-gray;
+    text-transform: uppercase;
   }
   &-content {
     display: flex;

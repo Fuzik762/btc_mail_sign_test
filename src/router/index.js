@@ -8,40 +8,40 @@ const routes = [
     component: () => import('../pages/AuthLogin.vue')
   },
   {
-    path: '/list-employee',
+    path: '/employee',
     name: 'ListEmployee',
     meta: {layout: 'dashboard-layout'},
     component: () => import('../pages/ListEmployee.vue')
   },
   {
-    path: '/create-employee',
+    path: '/employee/create',
     name: 'CreateEmployee',
     meta: {layout: 'dashboard-layout'},
-    component: () => import('../pages/CreateEditEmployee.vue')
+    component: () => import('../pages/SaveEmployee.vue')
   },
   {
-    path: '/edit-employee/:id',
+    path: '/employee/edit/:id',
     name: 'EditEmployee',
     meta: {layout: 'dashboard-layout'},
-    component: () => import('../pages/CreateEditEmployee.vue')
+    component: () => import('../pages/SaveEmployee.vue')
   },
   {
-    path: '/list-templates',
+    path: '/templates',
     name: 'ListTemplates',
     meta: {layout: 'dashboard-layout', editTemplates: true},
     component: () => import('../pages/ListTemplates.vue')
   },
   {
-    path: '/edit-templates/:id',
+    path: '/templates/edit/:id',
     name: 'EditTemplates',
     meta: {layout: 'dashboard-layout', editTemplates: false},
-    component: () => import('../pages/CreateEditTemplates.vue')
+    component: () => import('../pages/SaveTemplates.vue')
   },
   {
-    path: '/create-templates',
+    path: '/templates/create',
     name: 'CreateTemplates',
     meta: {layout: 'dashboard-layout', editTemplates: false},
-    component: () => import('../pages/CreateEditTemplates.vue')
+    component: () => import('../pages/SaveTemplates.vue')
   },
 ];
 

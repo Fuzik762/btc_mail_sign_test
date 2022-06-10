@@ -12,16 +12,21 @@
           icon-color="black"
           icon-name="iconBackArrow"
         />
-        Новый сотрудник
+        {{ isEditPage ? 'Редактирование сотрудника' : 'Новый сотрудник' }}
       </router-link>
     </div>
-    <form class="employee__form">
+    <FormValidate 
+      class="employee__form"
+      :validation-schema="schema"
+      @submit="onSubmit"
+    >
       <DataRow> 
         <template #head>
-          ОСНОВНЫЕ ДАННЫЕ
+          Оcновные данные
         </template>
         <DefaultInput
           id="create_name"
+          name="name"
           type="text"
           :required="true"
           placeholder="Фамилия Имя Отчество"
@@ -29,6 +34,7 @@
         />
         <DefaultInput
           id="create_company"
+          name="company"
           type="text"
           :required="true"
           placeholder="БТК (IT)"
@@ -36,6 +42,7 @@
         />
         <DefaultInput
           id="create_position"
+          name="position"
           type="text"
           :required="true"
           placeholder="Разработчик"
@@ -44,17 +51,19 @@
       </DataRow>
       <DataRow>
         <template #head>
-          КОНТАКТЫ
+          Контакты
         </template>
         <DefaultInput
           id="create_email"
+          name="email"
           type="email"
           :required="true"
           placeholder="Email"
           label="Email"
         />
         <DefaultInput
-          id="create_tnumber"
+          id="create_phone"
+          name="phone"
           type="tel"
           :required="true"
           placeholder="Номер телефона"
@@ -63,17 +72,19 @@
       </DataRow>
       <DataRow v-if="isEditPage">
         <template #head>
-          КОНТАКТЫ
+          Контакты
         </template>
         <DefaultInput
           id="edit_status"
+          name="status"
           type="text"
           :required="true"
           placeholder="Статус"
           label="Статус"
         />
         <DefaultInput
-          id="edit_holiday"
+          id="edit_vocationEndDate"
+          name="vocationEndDate"
           type="date"
           :required="true"
           placeholder="Дата"
@@ -82,16 +93,16 @@
       </DataRow>
       <DataRow> 
         <template #head>
-          ШАБЛОН
+          Шаблон
         </template>
         <TemplateButton label="Шаблон для IT" />
         <TemplateButton label="Шаблон для строительства" />
       </DataRow>
       <DefaultButton 
         type="submit"
-        label="Добавить сотрудника" 
+        :label="isEditPage ? 'Сохранить изменения' : 'Добавить сотрудника'" 
       />
-    </form>
+    </FormValidate>
     <div
       v-if="isEditPage" 
       class="employee__link"
@@ -103,7 +114,10 @@
         value="https://example.com"
         :readonly="true"
       />
-      <DefaultButton label="Скопировать ссылку" />
+      <DefaultButton 
+        label="Скопировать ссылку" 
+        @click="onCopy"
+      />
     </div>
   </div>
 </template>
@@ -114,6 +128,9 @@ import DefaultButton from "@/components/ui/DefaultButton.vue"
 import TemplateButton from "@/components/ui/TemplateButton.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 export default {
   name: "CreateEmployee",
   components: { 
@@ -123,14 +140,41 @@ export default {
     IconBase,
     TemplateButton,
   },
+  data() {
+    const schema = {
+      name: "required|alpha_spaces",
+      company: "required|alpha_dash",
+      position: "required|alpha_spaces",
+      email: "required|email",
+      phone: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
+    };
+
+    return {
+      schema,
+      submitButton: 'Добавить сотрудника',  
+    }
+  },
   computed: {
     isEditPage() {
       if(this.$route.params.id) {
         return true;
       }
-      return false;
+        return false; 
     }
   },
+  methods: {
+    onSubmit() {
+      if(this.isEditPage) {
+        toast.success("Данные успешно изменены!");
+      } else {
+        toast.success("Сотрудник успешно добавлен!");
+      }
+      this.$router.push({ name: 'ListEmployee' });
+    },
+    onCopy() {
+      toast.success("Ссылка скопирована!");
+    }
+  }
 }
 </script>
 

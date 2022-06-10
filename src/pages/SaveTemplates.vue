@@ -11,7 +11,7 @@
         icon-color="black"
         icon-name="iconBackArrow"
       />
-      Новый шаблон
+      {{ isEditPage ? 'Редактирование шаблона' : 'Новый шаблон' }}
     </router-link>
     <DefaultButton 
       v-if="isEditPage"
@@ -42,6 +42,9 @@ import DefaultInput from '@/components/ui/DefaultInput.vue'
 import DefaultButton from '@/components/ui/DefaultButton.vue'
 import TemplateItem from '@/components/TemplateItem.vue'
 import DefaultTextarea from '@/components/ui/TemplateTextarea.vue'
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 export default {
   name: "CreateEditTemplates",
   components: {
@@ -67,6 +70,13 @@ export default {
   methods: {
     editTemplate(html) {
       this.htmlCode = html;
+    },
+    onSubmit() {
+      if(this.isEditPage) {
+        toast.success('Шаблон успешно изменён!');
+      } else {
+        toast.success('Шаблон успешно добавлен!');
+      }
     }
   }
 }
