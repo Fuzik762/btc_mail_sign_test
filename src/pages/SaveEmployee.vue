@@ -95,8 +95,14 @@
         <template #head>
           Шаблон
         </template>
-        <TemplateButton label="Шаблон для IT" />
-        <TemplateButton label="Шаблон для строительства" />
+        <TemplateItem 
+          v-for="template in templates"
+          :key="template.id"
+          :id="template.id"
+          :html="template.htmlCode"
+          :class="{ active : isActive === template.id }"
+          @click="isActive = template.id"
+        />
       </DataRow>
       <DefaultButton 
         type="submit"
@@ -125,7 +131,7 @@
 <script>
 import DefaultInput from "@/components/ui/DefaultInput.vue"
 import DefaultButton from "@/components/ui/DefaultButton.vue"
-import TemplateButton from "@/components/ui/TemplateButton.vue"
+import TemplateItem from "@/components/TemplateItem.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
 import { useToast } from "vue-toastification";
@@ -138,7 +144,7 @@ export default {
     DefaultButton, 
     DataRow,
     IconBase,
-    TemplateButton,
+    TemplateItem,
   },
   data() {
     const schema = {
@@ -151,7 +157,20 @@ export default {
 
     return {
       schema,
-      submitButton: 'Добавить сотрудника',  
+      submitButton: 'Добавить сотрудника',
+      isActive: null,
+      templates: [
+        {
+          id: 'it',
+          name: 'Шаблон для IT',
+          htmlCode: '<div style="width: 150px; height: 150px; color: red"> Шаблон it </div>'
+        },
+        {
+          id: 'build',
+          name: 'Шаблон для Строительства',
+          htmlCode: '<div style="width: 150px; height: 150px; color: black"> Шаблон it </div>'
+        },
+      ]  
     }
   },
   computed: {
@@ -174,7 +193,7 @@ export default {
     onCopy() {
       toast.success("Ссылка скопирована!");
     }
-  }
+  },
 }
 </script>
 
@@ -206,5 +225,9 @@ export default {
     flex-direction: column;
     gap: 20px;
   }
+}
+
+.active {
+  outline: 3px solid c.$purple;
 }
 </style>

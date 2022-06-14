@@ -78,6 +78,9 @@ export default {
     border: 1px solid c.$gray;
     border-radius: 4px;
     padding: 8px 14px;
+    &:focus-visible {
+      outline: 2px solid c.$purple;
+    }
   }
   &-error {
     @include m.font(v.$font-inter, v.$font-reg-size, v.$font-medium);

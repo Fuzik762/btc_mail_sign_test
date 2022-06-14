@@ -46,13 +46,30 @@ export default {
   width: max-content;
   color: c.$white;
   padding: 8px 12px;
-  background-color: c.$purple-deep;
+  background-color: c.$purple;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  &:hover {
+    outline: 2px solid c.$purple;
+    background: none;
+    color: c.$purple;
+  }
+  &:active {
+    outline: 1px solid c.$purple;
+  }
 }
 
 .delete-btn {
   background-color: c.$dark-red;
+  &:hover {
+    outline: 2px solid c.$dark-red;
+    background: none;
+    color: c.$dark-red;
+  }
+  &:active {
+    outline: 1px solid c.$dark-red;
+  }
+  
 }
 </style>
