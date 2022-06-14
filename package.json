@@ -10,9 +10,13 @@
   "dependencies": {
     "@vee-validate/i18n": "^4.5.11",
     "@vee-validate/rules": "^4.5.11",
+    "@vue/apollo-option": "^4.0.0-alpha.17",
+    "apollo-boost": "^0.4.9",
     "core-js": "^3.8.3",
+    "graphql": "^15.8.0",
     "vee-validate": "^4.5.11",
     "vue": "^3.2.13",
+    "vue-apollo": "^3.1.0",
     "vue-router": "^4.0.3",
     "vue-toastification": "^2.0.0-rc.5"
   },

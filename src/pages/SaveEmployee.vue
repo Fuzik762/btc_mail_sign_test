@@ -97,8 +97,8 @@
         </template>
         <TemplateItem 
           v-for="template in templates"
-          :key="template.id"
           :id="template.id"
+          :key="template.id"
           :html="template.htmlCode"
           :class="{ active : isActive === template.id }"
           @click="isActive = template.id"
