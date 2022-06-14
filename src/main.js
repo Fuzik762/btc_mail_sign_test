@@ -55,6 +55,11 @@ const apolloClient = new ApolloClient({
 
 const apolloProvider = createApolloProvider({
   defaultClient: apolloClient,
+  defaultOptions: {
+    $query: {
+      fetchPolicy: "no-cache",
+    }
+  }
 })
 
 const app = createApp(App).use(router);

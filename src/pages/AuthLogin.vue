@@ -63,19 +63,23 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const base64encodedData = btoa(this.email + ':' + this.password);
-      localStorage.setItem("token_apollo", base64encodedData);
-      const result = await this.$apollo.query({
+      const result = (await this.$apollo.query({
         query: LOGIN_QUERY,
-      })
-      console.log(this.$apollo.queries)
-      if(result.data.login.status) {
+        variables: {
+          email: this.email,
+          password: this.password,
+        }
+      })).data.login
+      if(result.status) {
+        localStorage.setItem("token_apollo", result.token);
         toast.success('Вы успешно вошли в систему');
         this.$router.push({ name: 'ListEmployee' });
-      } else {
-        toast.error(result.data.login.errors[0].message);
+      } else if(localStorage.getItem("token_apollo")) {
+        this.$router.push({ name: 'ListEmployee' });
       }
-      
+        else {
+        toast.error(result.errors[0].message);
+      }   
     }
   }
 };
