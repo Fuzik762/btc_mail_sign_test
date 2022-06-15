@@ -18,6 +18,7 @@
           src="@/assets/icons/search__icon.svg"
         >
         <input
+          v-model="searchInput"
           class="toolbar__search-input"
           type="text"
           placeholder="Поиск по ФИО, Должности, email, телефону"
@@ -25,6 +26,7 @@
         <DefaultButton
           class="toolbar__search-button"
           label="Поиск"
+          @click="searchEmployee"
         />
       </div>
       <div class="filter">
@@ -48,7 +50,7 @@
           </div>
         </div>
         <div
-          v-if="showFilterMenu" 
+          v-show="showFilterMenu" 
           class="filter__menu"
         > 
           <DefaultCheckbox
@@ -61,43 +63,58 @@
             name="filter"
             label="Уволен"
             text-color="fired"
+            @checked="setFilter($event)"
           />
           <DefaultCheckbox
             id="filter_holiday"
             name="filter"
             label="В отпуске"
             text-color="holiday"
+            @checked="setFilter($event)"
           />
           <DefaultCheckbox
             id="filter_work"
             name="filter"
             label="Работает"
             text-color="work"
+            @checked="setFilter($event)"
           />
         </div>
       </div>
     </div>
-    <TableEmployee />
+    <TableEmployee 
+      v-if="staff.length"
+      :staff="staff"
+      @staff-order="staffOrderByInput($event)"
+    />
   </div>
   <div class="pagination">
     <img 
       src="@/assets/icons/first-page__icon.svg" 
       class="pagination__first-page"
+      :disabled="currentPage === 1"
+      @click="pageChange(currentPage = 1)"
     >
     <img 
       src="@/assets/icons/prev-page__icon.svg" 
       class="pagination__prev-page"
+      :disabled="currentPage === 1"
+      @click="pageChange(currentPage - 1)"
     >
     <div class="pagination__pages">
-      1-10 из 276
+      {{ fromRecord }}-{{ toRecord }} из {{ totalPage }}
     </div>
     <img 
       src="@/assets/icons/next-page__icon.svg" 
       class="pagination__next-page"
+      :disabled="currentPage === totalPage"
+      @click="pageChange(currentPage + 1)"
     >
     <img 
       src="@/assets/icons/last-page__icon.svg" 
       class="pagination__last-page"
+      :disabled="currentPage === totalPage"
+      @click="pageChange(currentPage = totalPage)"
     >
   </div>
 </template>
@@ -107,9 +124,25 @@ import DefaultButton from "@/components/ui/DefaultButton.vue"
 import DefaultCheckbox from "@/components/ui/DefaultCheckbox.vue"
 import IconBase from "@/components/ui/IconBase.vue"
 import TableEmployee from "@/components/TableEmployee.vue"
+import { GET_STAFF } from "@/graphql/queries"
 
 export default {
   name: "ListEmployee",
+  apollo: {
+    staff: {
+      query: GET_STAFF,
+      variables() {
+        return { 
+          limit: this.windowHeigthLimit
+        }
+      },
+      update(data) {
+        this.totalPage = Math.ceil(data.getStaff.totalCount / this.windowHeigthLimit)
+        this.totalCount = data.getStaff.totalCount
+        return data.getStaff.staff
+      }
+    }
+  },
   components: { 
     DefaultButton,
     DefaultCheckbox, 
@@ -120,6 +153,63 @@ export default {
     return {
       status: "Все",
       showFilterMenu: false,
+      staff: [],
+      totalPage: 0,
+      totalCount: 0,
+      searchInput: "",
+      filter: [],
+      currentPage: 1,
+    }
+  },
+  computed: {
+    windowHeigthLimit() {
+      return Math.round(window.innerHeight / 60)
+    },
+    fromRecord() {
+      if(this.currentPage === 1) {
+        return 1;
+      } else {
+        return (this.windowHeigthLimit * (this.currentPage - 1)) + 1
+      }
+    },
+    toRecord() {
+      if(this.currentPage === this.totalPage) {
+        return this.totalCount;
+      } else {
+        return this.windowHeigthLimit * this.currentPage
+      }
+    }
+  },
+  methods: {
+    searchEmployee() {
+      this.$apollo.queries.staff.refetch({
+        searchString: this.searchInput
+      })
+    },
+    setFilter(value) {
+      if(!this.filter.includes(value)) {
+        this.filter.push(value)
+      } else {
+        let idx = this.filter.indexOf(value)
+        this.filter.splice(idx, 1);
+      }
+      this.$apollo.queries.staff.refetch({
+        statusFilter: this.filter
+      })
+    },
+    pageChange(value) {
+      this.currentPage = value;
+      this.$apollo.queries.staff.refetch({
+        offset: this.fromRecord
+      })
+    },
+    staffOrderByInput([id, order]) {
+      console.log(id, order)
+      this.$apollo.queries.staff.refetch({
+        orderBy: {
+          [id]: order
+        }
+      })
     }
   },
 }

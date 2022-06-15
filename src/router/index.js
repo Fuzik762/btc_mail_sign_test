@@ -59,7 +59,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const currentUser = localStorage.getItem("token_apollo");
-  console.log(currentUser)
   const requireAuth = to.matched.some(r => r.meta.auth)
 
   if(requireAuth && !currentUser) {

@@ -4,17 +4,19 @@
       <thead class="table__head">
         <tr>
           <th
-            v-for="head in tableHeaders" 
-            :key="head" 
+            v-for="head in tableHeaders"
+            :id="head.id"
+            :key="head.id" 
             class="table__head-text"
+            @click="sortOrder(head.id)"
           >
-            {{ head }}
+            {{ head.title }}
           </th>
         </tr>
       </thead>
       <tbody class="table__content">
         <tr 
-          v-for="employee in tableEmployee" 
+          v-for="employee in staff" 
           :key="employee.id"
           class="table__content-row"
         >
@@ -42,7 +44,7 @@
           <td class="table__content-show table__content-cell">
             <router-link
               class="table__content-show-link"
-              :to="{name: 'EditEmployee', params: {id: '123'}}"
+              :to="{name: 'EditEmployee', params: {id: employee.id}}"
             >
               Просмотр
             </router-link>
@@ -56,11 +58,24 @@
 <script>
 export default {
   name: "TableEmployee",
+  props: {
+    staff: {
+      type: Array,
+      default: () => [],
+    }
+  },
+  emits: ["staffOrder"],
   data() {
     return {
-      tableHeaders: ["ФИО", "КОМПАНИЯ", "ДОЛЖНОСТЬ", "ПОЧТА", "ТЕЛЕФОН", "СТАТУС", ""],
-      tableEmployee: [{name: "Фамилия Имя Отчество", company: "БТК (IT)", position: "Разработчик", email: "developer@btc.com", tnumber: "+796010202020", status: "В отпуске", id: "1"},
-        {name: "Фамилия Имя Отчество", company: "БТК (IT)", position: "Разработчик", email: "developer@btc.com", tnumber: "+796010202020", status: "Работает", id: "2"}],
+      tableHeaders: [
+        {title: "ФИО", id: "name", order: "asc"}, 
+        {title: "Компания", id: "company", order: "asc"}, 
+        {title: "Должность", id: "position", order: "asc"}, 
+        {title: "Почта", id: "email", order: "asc"}, 
+        {title: "Телефон", id: "phone", order: "asc"},
+        {title: "Статус", id: "status", order: "asc"},
+        {title: "", id: null}
+      ],
     }
   },
   methods: {
@@ -68,6 +83,15 @@ export default {
       if(status === 'В отпуске') return "holiday";
       if(status === 'Уволен') return "fired";
       return "work";
+    },
+    sortOrder(id) {
+      let obj = this.tableHeaders.find(head => head.id === id)
+      if(obj["order"] === "asc") {
+        obj["order"] = "desc"
+      } else {
+        obj["order"] = "asc"
+      }
+      if(id) this.$emit("staffOrder", [id, obj["order"]]);
     }
   }
 }
@@ -90,8 +114,13 @@ export default {
     &-text {
       @include m.font(v.$font-inter, v.$font-small-size, v.$font-semibold);
       color: c.$deep-dark-gray;
+      text-transform: uppercase;
       text-align: left;
       padding: 10px 20px;
+      cursor: pointer;
+      &:last-child {
+        cursor: auto;
+      }
     }
   }
   &__content {
