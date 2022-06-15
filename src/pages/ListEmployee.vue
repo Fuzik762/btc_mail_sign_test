@@ -89,33 +89,29 @@
     />
   </div>
   <div class="pagination">
-    <img 
-      src="@/assets/icons/first-page__icon.svg" 
-      class="pagination__first-page"
+    <button 
+      class="pagination__first-page pagination-btn"
       :disabled="currentPage === 1"
       @click="pageChange(currentPage = 1)"
-    >
-    <img 
-      src="@/assets/icons/prev-page__icon.svg" 
-      class="pagination__prev-page"
+    />
+    <button
+      class="pagination__prev-page pagination-btn"
       :disabled="currentPage === 1"
       @click="pageChange(currentPage - 1)"
-    >
+    />
     <div class="pagination__pages">
       {{ fromRecord }}-{{ toRecord }} из {{ totalPage }}
     </div>
-    <img 
-      src="@/assets/icons/next-page__icon.svg" 
-      class="pagination__next-page"
+    <button 
+      class="pagination__next-page pagination-btn"
       :disabled="currentPage === totalPage"
       @click="pageChange(currentPage + 1)"
-    >
-    <img 
-      src="@/assets/icons/last-page__icon.svg" 
-      class="pagination__last-page"
+    />
+    <button 
+      class="pagination__last-page pagination-btn"
       :disabled="currentPage === totalPage"
       @click="pageChange(currentPage = totalPage)"
-    >
+    />
   </div>
 </template>
 
@@ -133,11 +129,11 @@ export default {
       query: GET_STAFF,
       variables() {
         return { 
-          limit: this.windowHeigthLimit
+          limit: this.limitRecords,
         }
       },
       update(data) {
-        this.totalPage = Math.ceil(data.getStaff.totalCount / this.windowHeigthLimit)
+        this.totalPage = Math.ceil(data.getStaff.totalCount / this.limitRecords)
         this.totalCount = data.getStaff.totalCount
         return data.getStaff.staff
       }
@@ -159,24 +155,22 @@ export default {
       searchInput: "",
       filter: [],
       currentPage: 1,
+      limitRecords: 10,
     }
   },
   computed: {
-    windowHeigthLimit() {
-      return Math.round(window.innerHeight / 60)
-    },
     fromRecord() {
       if(this.currentPage === 1) {
         return 1;
       } else {
-        return (this.windowHeigthLimit * (this.currentPage - 1)) + 1
+        return (this.limitRecords * (this.currentPage - 1)) + 1
       }
     },
     toRecord() {
       if(this.currentPage === this.totalPage) {
         return this.totalCount;
       } else {
-        return this.windowHeigthLimit * this.currentPage
+        return this.limitRecords * this.currentPage
       }
     }
   },
@@ -200,7 +194,7 @@ export default {
     pageChange(value) {
       this.currentPage = value;
       this.$apollo.queries.staff.refetch({
-        offset: this.fromRecord
+        offset: this.fromRecord - 1
       })
     },
     staffOrderByInput([id, order]) {
@@ -220,7 +214,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: calc(100% - 45px);
   padding: 16px 18px;
 
   &__head {
@@ -310,10 +303,26 @@ export default {
     @include m.font(v.$font-inter, v.$font-small-size, v.$font-bold);
     color: c.$black-gray;
   }
-  &__next-page,
-  &__prev-page,
-  &__first-page,
+  &__next-page { 
+    background-image: url("@/assets/icons/next-page__icon.svg");
+  }
+  &__prev-page {
+    background-image: url("@/assets/icons/prev-page__icon.svg");
+  }
+  &__first-page {
+    background-image: url("@/assets/icons/first-page__icon.svg");
+  }
   &__last-page {
+    background-image: url("@/assets/icons/last-page__icon.svg");
+  }
+  &-btn {
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 18px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
   }
 }

@@ -102,12 +102,18 @@ export default {
   padding: 0px 12px;
   border-collapse: collapse;
   width: 100%;
+  height: 100%;
   @media (max-width: v.$extra-large-screen) {
     white-space: nowrap;
-    &__wrapper {
-      overflow-x: auto
+  }
+  &__wrapper {
+    overflow-x: auto;
+    height: 100%;
+    @media (max-width: v.$extra-large-screen) { 
+      overflow-x: auto;
     }
   }
+  
   
   &__head {
     background-color: c.$head-table-bg;
