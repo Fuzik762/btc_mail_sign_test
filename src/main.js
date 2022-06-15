@@ -41,7 +41,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem("token_apollo");
   operation.setContext({
     headers: {
-      authorization: token ? `Basic ${token}` : null
+      "x-access-token": token ? token : null
     }
   })
 

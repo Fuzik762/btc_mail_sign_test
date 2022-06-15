@@ -8,7 +8,8 @@
       :id="id" 
       class="checkbox-input" 
       type="checkbox" 
-      :name="propName" 
+      :name="propName"
+      @change="setChecked" 
     >
     <span class="checkbox-flag" />
     {{ label }}
@@ -36,6 +37,17 @@ export default {
       default: "black"
     }
   },
+  emits: ["checked"],
+  data() {
+    return {
+      isChecked: true,
+    }
+  },
+  methods: {
+    setChecked() {
+      this.$emit("checked", this.label);
+    }
+  }
 };
 </script>
 
