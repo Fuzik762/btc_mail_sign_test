@@ -16,6 +16,7 @@
       </router-link>
     </div>
     <FormValidate 
+      v-if="Object.keys(employee).length"
       class="employee__form"
       :validation-schema="schema"
       @submit="onSubmit"
@@ -31,6 +32,8 @@
           :required="true"
           placeholder="Фамилия Имя Отчество"
           label="ФИО"
+          :value="employee.name"
+          @input="employee.name = $event"
         />
         <DefaultInput
           id="create_company"
@@ -39,6 +42,8 @@
           :required="true"
           placeholder="БТК (IT)"
           label="Компания"
+          :value="employee.company"
+          @input="employee.company = $event"
         />
         <DefaultInput
           id="create_position"
@@ -47,6 +52,8 @@
           :required="true"
           placeholder="Разработчик"
           label="Должность"
+          :value="employee.position"
+          @input="employee.position = $event"
         />
       </DataRow>
       <DataRow>
@@ -60,6 +67,8 @@
           :required="true"
           placeholder="Email"
           label="Email"
+          :value="employee.email"
+          @input="employee.email = $event"
         />
         <DefaultInput
           id="create_phone"
@@ -68,6 +77,8 @@
           :required="true"
           placeholder="Номер телефона"
           label="Телефон"
+          :value="employee.phone"
+          @input="employee.phone = $event"
         />
       </DataRow>
       <DataRow v-if="isEditPage">
@@ -81,6 +92,8 @@
           :required="true"
           placeholder="Статус"
           label="Статус"
+          :value="employee.status"
+          @input="employee.status = $event"
         />
         <DefaultInput
           id="edit_vocationEndDate"
@@ -91,13 +104,13 @@
           label="В отпуске до"
         />
       </DataRow>
-      <DataRow> 
+      <DataRow class="employee__templates"> 
         <template #head>
           Шаблон
         </template>
         <TemplateItem 
           v-for="template in templates"
-          :id="template.id"
+          :id="String(template.id)"
           :key="template.id"
           :html="template.htmlCode"
           :class="{ active : isActive === template.id }"
@@ -135,6 +148,8 @@ import TemplateItem from "@/components/TemplateItem.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
 import { useToast } from "vue-toastification";
+import { GET_EMPLOYEE, GET_TEMPLATES } from "@/graphql/queries"
+import { CREATE_EMPLOYEE } from "@/graphql/mutations"
 
 const toast = useToast();
 export default {
@@ -159,18 +174,20 @@ export default {
       schema,
       submitButton: 'Добавить сотрудника',
       isActive: null,
-      templates: [
-        {
-          id: 'it',
-          name: 'Шаблон для IT',
-          htmlCode: '<div style="width: 150px; height: 150px; color: red"> Шаблон it </div>'
-        },
-        {
-          id: 'build',
-          name: 'Шаблон для Строительства',
-          htmlCode: '<div style="width: 150px; height: 150px; color: black"> Шаблон it </div>'
-        },
-      ]  
+      employee: {
+        name: "",
+        company: "",
+        position: "",
+        nameEng: "",
+        companyEng: "",
+        positionEng: "",
+        email: "",
+        phone: "",
+        status: "Работает",
+        vacationEndDate: "",
+        templateId: 1,
+      },
+      templates: []  
     }
   },
   computed: {
@@ -181,11 +198,32 @@ export default {
         return false; 
     }
   },
+  async created() {
+    if(this.isEditPage) {
+      this.employee = (await this.$apollo.query({
+        query: GET_EMPLOYEE,
+        variables: {
+          id: Number(this.$route.params.id)
+        }
+      })).data.getEmployee.employee
+    }
+    this.templates = (await this.$apollo.query({
+        query: GET_TEMPLATES,
+      })).data.getTemplates.templates
+  },
   methods: {
     onSubmit() {
       if(this.isEditPage) {
         toast.success("Данные успешно изменены!");
       } else {
+        this.employee.templateId = this.isActive
+        // this.$apollo.mutate({
+        //   mutation: CREATE_EMPLOYEE,
+        //   variables: {
+
+        //   }
+        // })
+        console.log(this.employee)
         toast.success("Сотрудник успешно добавлен!");
       }
       this.$router.push({ name: 'ListEmployee' });
@@ -224,6 +262,12 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+  
+  &__templates {
+    min-height: 300px;
+    overflow-y: scroll;
+    max-width: 80%;
   }
 }
 

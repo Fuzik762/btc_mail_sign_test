@@ -120,6 +120,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
     @media (max-width: v.$medium-screen) {
       width: 90%;
     }

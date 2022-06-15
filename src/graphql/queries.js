@@ -44,3 +44,51 @@ export const GET_STAFF = gql`
     }
   }
 `
+export const GET_EMPLOYEE = gql`
+  query GetEmployee($id: Int!) {
+    getEmployee(id: $id) {
+      status
+      errors {
+        code
+        message
+      }
+      employee {
+        id
+        name
+        company
+        position
+        nameEng
+        companyEng
+        positionEng
+        email
+        phone
+        status
+        vacationEndDate
+        url
+        template {
+          id
+          name
+          htmlCode
+        }
+      }
+    }
+  }
+`
+
+export const GET_TEMPLATES = gql`
+  query GetTemplates($limit: Int, $offset: Int) {
+    getTemplates(limit: $limit, offset: $offset) {
+      status
+      errors {
+        code
+        message
+      }
+      templates {
+        id
+        name
+        htmlCode
+      }
+      totalCount
+    }
+  }
+`
