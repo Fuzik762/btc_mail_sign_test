@@ -20,6 +20,7 @@
       label="Email" 
       :required="true" 
       placeholder="example@email.com" 
+      @input="email = $event"
     />
     <DefaultInput
       id="auth_password" 
@@ -28,6 +29,7 @@
       label="Пароль" 
       :required="true" 
       placeholder="*********" 
+      @input="password = $event"
     />
     <DefaultButton 
       class="login__submit" 
@@ -40,8 +42,8 @@
 <script>
 import DefaultInput from '@/components/ui/DefaultInput.vue';
 import DefaultButton from '@/components/ui/DefaultButton.vue';
-import { useToast } from "vue-toastification";
-
+import { useToast } from 'vue-toastification';
+import { LOGIN_QUERY } from '@/graphql/queries';
 const toast = useToast();
 
 export default {
@@ -55,12 +57,29 @@ export default {
     
     return {
       schema,
+      email: null,
+      password: null,
     }
   },
   methods: {
-    onSubmit() {
-      toast.success('Вы успешно вошли в систему');
-      this.$router.push({ name: 'ListEmployee' });
+    async onSubmit() {
+      const result = (await this.$apollo.query({
+        query: LOGIN_QUERY,
+        variables: {
+          email: this.email,
+          password: this.password,
+        }
+      })).data.login
+      if(result.status) {
+        localStorage.setItem("token_apollo", result.token);
+        toast.success('Вы успешно вошли в систему');
+        this.$router.push({ name: 'ListEmployee' });
+      } else if(localStorage.getItem("token_apollo")) {
+        this.$router.push({ name: 'ListEmployee' });
+      }
+        else {
+        toast.error(result.errors[0].message);
+      }   
     }
   }
 };

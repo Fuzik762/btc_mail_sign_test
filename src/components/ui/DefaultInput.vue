@@ -15,6 +15,7 @@
       :placeholder="placeholder"
       :readonly="readonly"
       :value="value"
+      @change="getValue($event.target.value)"
     />
     <ErrorMessage 
       class="input-error"
@@ -60,6 +61,12 @@ export default {
       default: "defaultInput"
     },
   },
+  emits: ["input"],
+  methods: {
+    getValue(value) {
+      this.$emit("input", value);
+    }
+  }
 };
 </script>
 
