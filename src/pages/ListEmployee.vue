@@ -198,7 +198,6 @@ export default {
       })
     },
     staffOrderByInput([id, order]) {
-      console.log(id, order)
       this.$apollo.queries.staff.refetch({
         orderBy: {
           [id]: order

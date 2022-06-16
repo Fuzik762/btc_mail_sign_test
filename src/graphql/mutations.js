@@ -111,3 +111,48 @@ export const UPDATE_EMPLOYEE = gql`
     }
   }
 `
+
+export const UPDATE_TEMPLATE = gql`
+  mutation UpdateTemplate($id: Int!, $name: String, $htmlCode: String) {
+    updateTemplate(id: $id, name: $name, htmlCode: $htmlCode) {
+      status
+      errors {
+        code
+        message
+      }
+      template {
+        id
+        name
+        htmlCode
+      }
+    }
+  }
+`
+export const CREATE_TEMPLATE = gql`
+  mutation CreateTemplate($name: String!, $htmlCode: String) {
+    createTemplate(name: $name, htmlCode: $htmlCode) {
+      status
+      errors {
+        code
+        message
+      }
+      template {
+        id
+        name
+        htmlCode
+      }
+    }
+  }
+`
+
+export const DELETE_TEMPLATE = gql`
+  mutation DeleteTemplate($id: Int!) {
+    deleteTemplate(id: $id) {
+      status
+      errors {
+        code
+        message
+      }
+    }
+  }
+`

@@ -65,6 +65,7 @@
           <div 
             v-if="isLogout" 
             class="user__toolbar-logout"
+            @click="logout"
           >
             Выйти из учетной записи
           </div>
@@ -81,6 +82,10 @@
 
 <script>
 import IconBase from "@/components/ui/IconBase.vue"
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+
 export default {
   name: "DashboardLayout",
   components: { IconBase },
@@ -89,6 +94,13 @@ export default {
       isLogout: false,
     };
   },
+  methods: {
+    logout() {
+      localStorage.removeItem("token_apollo")
+      this.$router.push({ name: "AuthLogin" })
+      toast.success("Вы успешно вышли из системы!")
+    }
+  }
 };
 </script>
 

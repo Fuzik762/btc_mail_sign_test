@@ -11,17 +11,42 @@
         @click="$router.push({ name: 'CreateTemplates' })"
       />
     </div>
-    <TemplateItem />
-    <TemplateItem />
+    <TemplateItem 
+      v-for="template in templates" 
+      :id="template.id"
+      :key="template.id"
+      :name="template.name"
+      :html="template.htmlCode"
+    />
   </div>
 </template>
 
 <script>
 import DefaultButton from '@/components/ui/DefaultButton.vue'
 import TemplateItem from '@/components/TemplateItem.vue'
+import { GET_TEMPLATES } from '@/graphql/queries'
+
 export default {
   name: "ListTemplates",
   components: { DefaultButton, TemplateItem },
+  apollo: {
+    templates: {
+      query: GET_TEMPLATES,
+      result({ data }) {
+        if(data) {
+          this.templates = {
+            ...data.getTemplates.templates
+          };
+        }
+      },
+      update: data => data.getTemplates.templates,
+    }
+  },
+  data() {
+    return {
+      templates: [],
+    }
+  },
 };
 </script>
 
