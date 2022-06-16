@@ -14,8 +14,9 @@
       :required="required"
       :placeholder="placeholder"
       :readonly="readonly"
-      :value="value"
-      @change="getValue($event.target.value)"
+      :model-value="value"
+      :list="list"
+      @input="getValue($event.target.value)"
     />
     <ErrorMessage 
       class="input-error"
@@ -60,11 +61,15 @@ export default {
       type: String,
       default: "defaultInput"
     },
+    list: {
+      type: String,
+      default: null,
+    }
   },
-  emits: ["input"],
+  emits: ["update:modelValue"],
   methods: {
     getValue(value) {
-      this.$emit("input", value);
+      this.$emit("update:modelValue", value);
     }
   }
 };

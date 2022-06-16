@@ -16,7 +16,6 @@
       </router-link>
     </div>
     <FormValidate 
-      v-if="Object.keys(employee).length"
       class="employee__form"
       :validation-schema="schema"
       @submit="onSubmit"
@@ -33,7 +32,7 @@
           placeholder="Фамилия Имя Отчество"
           label="ФИО"
           :value="employee.name"
-          @input="employee.name = $event"
+          @update:model-value="employee.name = $event"
         />
         <DefaultInput
           id="create_company"
@@ -43,7 +42,7 @@
           placeholder="БТК (IT)"
           label="Компания"
           :value="employee.company"
-          @input="employee.company = $event"
+          @update:model-value="employee.company = $event"
         />
         <DefaultInput
           id="create_position"
@@ -53,7 +52,7 @@
           placeholder="Разработчик"
           label="Должность"
           :value="employee.position"
-          @input="employee.position = $event"
+          @update:model-value="employee.position = $event"
         />
       </DataRow>
       <DataRow>
@@ -68,7 +67,7 @@
           placeholder="Email"
           label="Email"
           :value="employee.email"
-          @input="employee.email = $event"
+          @update:model-value="employee.email = $event"
         />
         <DefaultInput
           id="create_phone"
@@ -78,7 +77,7 @@
           placeholder="Номер телефона"
           label="Телефон"
           :value="employee.phone"
-          @input="employee.phone = $event"
+          @update:model-value="employee.phone = $event"
         />
       </DataRow>
       <DataRow v-if="isEditPage">
@@ -89,12 +88,18 @@
           id="edit_status"
           name="status"
           type="text"
+          list="status-list"
           :required="true"
           placeholder="Статус"
           label="Статус"
           :value="employee.status"
-          @input="employee.status = $event"
+          @update:model-value="employee.status = $event"
         />
+        <datalist id="status-list">
+          <option value="Работает" />
+          <option value="В отпуске" />
+          <option value="Уволен" />
+        </datalist>
         <DefaultInput
           id="edit_vocationEndDate"
           name="vocationEndDate"
@@ -102,6 +107,8 @@
           :required="true"
           placeholder="Дата"
           label="В отпуске до"
+          :value="employee.vacationEndDate"
+          @update:model-value="employee.vacationEndDate = $event"
         />
       </DataRow>
       <DataRow class="employee__templates"> 
@@ -130,7 +137,7 @@
         id="copy_link"
         type="url"
         label="Ссылка для вставки в письмо"
-        value="https://example.com"
+        :value="urlCopy = employee.url"
         :readonly="true"
       />
       <DefaultButton 
@@ -149,7 +156,7 @@ import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
 import { useToast } from "vue-toastification";
 import { GET_EMPLOYEE, GET_TEMPLATES } from "@/graphql/queries"
-import { CREATE_EMPLOYEE } from "@/graphql/mutations"
+import { CREATE_EMPLOYEE, UPDATE_EMPLOYEE } from "@/graphql/mutations"
 
 const toast = useToast();
 export default {
@@ -161,10 +168,32 @@ export default {
     IconBase,
     TemplateItem,
   },
+  apollo: {
+    employee: {
+      query: GET_EMPLOYEE,
+      variables() {
+        return {
+          id: Number(this.$route.params.id)
+        }
+      },
+      result({ data }) {
+        if(data) {
+          this.employee = {
+            ...data.getEmployee.employee
+          },
+          this.isActive = data.getEmployee.employee.template.id;
+        }
+      },
+      update: data => data.getEmployee.employee,
+      skip() {
+        return !this.isEditPage;
+      }
+    }
+  },
   data() {
     const schema = {
       name: "required|alpha_spaces",
-      company: "required|alpha_dash",
+      company: "required",
       position: "required|alpha_spaces",
       email: "required|email",
       phone: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
@@ -184,9 +213,10 @@ export default {
         email: "",
         phone: "",
         status: "Работает",
-        vacationEndDate: "",
+        vacationEndDate: null,
         templateId: 1,
       },
+      urlCopy: "",
       templates: []  
     }
   },
@@ -199,36 +229,39 @@ export default {
     }
   },
   async created() {
-    if(this.isEditPage) {
-      this.employee = (await this.$apollo.query({
-        query: GET_EMPLOYEE,
-        variables: {
-          id: Number(this.$route.params.id)
-        }
-      })).data.getEmployee.employee
-    }
     this.templates = (await this.$apollo.query({
         query: GET_TEMPLATES,
       })).data.getTemplates.templates
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if(this.isEditPage) {
-        toast.success("Данные успешно изменены!");
+        this.employee.templateId = this.isActive
+        await this.$apollo.mutate({
+          mutation: UPDATE_EMPLOYEE,
+          variables: {
+            ...this.employee
+          }
+        }).then(() => {
+          toast.success("Данные успешно изменены!");
+          this.$router.push({ name: 'ListEmployee' });
+        });
       } else {
         this.employee.templateId = this.isActive
-        // this.$apollo.mutate({
-        //   mutation: CREATE_EMPLOYEE,
-        //   variables: {
-
-        //   }
-        // })
-        console.log(this.employee)
-        toast.success("Сотрудник успешно добавлен!");
+        await this.$apollo.mutate({
+          mutation: CREATE_EMPLOYEE,
+          variables: {
+            ...this.employee
+          }
+        }).then(() => {
+          toast.success("Сотрудник успешно добавлен!");
+          this.$router.push({ name: 'ListEmployee' });
+        });
       }
-      this.$router.push({ name: 'ListEmployee' });
+      
     },
     onCopy() {
+      navigator.clipboard.writeText(this.urlCopy);
       toast.success("Ссылка скопирована!");
     }
   },
