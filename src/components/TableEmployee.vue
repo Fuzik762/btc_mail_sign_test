@@ -33,7 +33,7 @@
             {{ employee.email }}
           </td>
           <td class="table__content-tnumber table__content-cell">
-            {{ employee.tnumber }}
+            {{ employee.phone }}
           </td>
           <td 
             class="table__content-status table__content-cell"

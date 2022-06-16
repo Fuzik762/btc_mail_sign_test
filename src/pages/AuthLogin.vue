@@ -20,7 +20,7 @@
       label="Email" 
       :required="true" 
       placeholder="example@email.com" 
-      @input="email = $event"
+      @update:model-value="email = $event"
     />
     <DefaultInput
       id="auth_password" 
@@ -29,7 +29,7 @@
       label="Пароль" 
       :required="true" 
       placeholder="*********" 
-      @input="password = $event"
+      @update:model-value="password = $event"
     />
     <DefaultButton 
       class="login__submit" 

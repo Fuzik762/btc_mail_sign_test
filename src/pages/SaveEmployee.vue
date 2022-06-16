@@ -31,6 +31,8 @@
           :required="true"
           placeholder="Фамилия Имя Отчество"
           label="ФИО"
+          :value="employee.name"
+          @update:model-value="employee.name = $event"
         />
         <DefaultInput
           id="create_company"
@@ -39,6 +41,8 @@
           :required="true"
           placeholder="БТК (IT)"
           label="Компания"
+          :value="employee.company"
+          @update:model-value="employee.company = $event"
         />
         <DefaultInput
           id="create_position"
@@ -47,6 +51,8 @@
           :required="true"
           placeholder="Разработчик"
           label="Должность"
+          :value="employee.position"
+          @update:model-value="employee.position = $event"
         />
       </DataRow>
       <DataRow>
@@ -60,6 +66,8 @@
           :required="true"
           placeholder="Email"
           label="Email"
+          :value="employee.email"
+          @update:model-value="employee.email = $event"
         />
         <DefaultInput
           id="create_phone"
@@ -68,6 +76,8 @@
           :required="true"
           placeholder="Номер телефона"
           label="Телефон"
+          :value="employee.phone"
+          @update:model-value="employee.phone = $event"
         />
       </DataRow>
       <DataRow v-if="isEditPage">
@@ -78,10 +88,18 @@
           id="edit_status"
           name="status"
           type="text"
+          list="status-list"
           :required="true"
           placeholder="Статус"
           label="Статус"
+          :value="employee.status"
+          @update:model-value="employee.status = $event"
         />
+        <datalist id="status-list">
+          <option value="Работает" />
+          <option value="В отпуске" />
+          <option value="Уволен" />
+        </datalist>
         <DefaultInput
           id="edit_vocationEndDate"
           name="vocationEndDate"
@@ -89,15 +107,17 @@
           :required="true"
           placeholder="Дата"
           label="В отпуске до"
+          :value="employee.vacationEndDate"
+          @update:model-value="employee.vacationEndDate = $event"
         />
       </DataRow>
-      <DataRow> 
+      <DataRow class="employee__templates"> 
         <template #head>
           Шаблон
         </template>
         <TemplateItem 
           v-for="template in templates"
-          :id="template.id"
+          :id="String(template.id)"
           :key="template.id"
           :html="template.htmlCode"
           :class="{ active : isActive === template.id }"
@@ -117,7 +137,7 @@
         id="copy_link"
         type="url"
         label="Ссылка для вставки в письмо"
-        value="https://example.com"
+        :value="urlCopy = employee.url"
         :readonly="true"
       />
       <DefaultButton 
@@ -135,6 +155,8 @@ import TemplateItem from "@/components/TemplateItem.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
 import { useToast } from "vue-toastification";
+import { GET_EMPLOYEE, GET_TEMPLATES } from "@/graphql/queries"
+import { CREATE_EMPLOYEE, UPDATE_EMPLOYEE } from "@/graphql/mutations"
 
 const toast = useToast();
 export default {
@@ -146,10 +168,32 @@ export default {
     IconBase,
     TemplateItem,
   },
+  apollo: {
+    employee: {
+      query: GET_EMPLOYEE,
+      variables() {
+        return {
+          id: Number(this.$route.params.id)
+        }
+      },
+      result({ data }) {
+        if(data) {
+          this.employee = {
+            ...data.getEmployee.employee
+          },
+          this.isActive = data.getEmployee.employee.template.id;
+        }
+      },
+      update: data => data.getEmployee.employee,
+      skip() {
+        return !this.isEditPage;
+      }
+    }
+  },
   data() {
     const schema = {
       name: "required|alpha_spaces",
-      company: "required|alpha_dash",
+      company: "required",
       position: "required|alpha_spaces",
       email: "required|email",
       phone: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
@@ -159,18 +203,21 @@ export default {
       schema,
       submitButton: 'Добавить сотрудника',
       isActive: null,
-      templates: [
-        {
-          id: 'it',
-          name: 'Шаблон для IT',
-          htmlCode: '<div style="width: 150px; height: 150px; color: red"> Шаблон it </div>'
-        },
-        {
-          id: 'build',
-          name: 'Шаблон для Строительства',
-          htmlCode: '<div style="width: 150px; height: 150px; color: black"> Шаблон it </div>'
-        },
-      ]  
+      employee: {
+        name: "",
+        company: "",
+        position: "",
+        nameEng: "",
+        companyEng: "",
+        positionEng: "",
+        email: "",
+        phone: "",
+        status: "Работает",
+        vacationEndDate: null,
+        templateId: 1,
+      },
+      urlCopy: "",
+      templates: []  
     }
   },
   computed: {
@@ -181,16 +228,40 @@ export default {
         return false; 
     }
   },
+  async created() {
+    this.templates = (await this.$apollo.query({
+        query: GET_TEMPLATES,
+      })).data.getTemplates.templates
+  },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if(this.isEditPage) {
-        toast.success("Данные успешно изменены!");
+        this.employee.templateId = this.isActive
+        await this.$apollo.mutate({
+          mutation: UPDATE_EMPLOYEE,
+          variables: {
+            ...this.employee
+          }
+        }).then(() => {
+          toast.success("Данные успешно изменены!");
+          this.$router.push({ name: 'ListEmployee' });
+        });
       } else {
-        toast.success("Сотрудник успешно добавлен!");
+        this.employee.templateId = this.isActive
+        await this.$apollo.mutate({
+          mutation: CREATE_EMPLOYEE,
+          variables: {
+            ...this.employee
+          }
+        }).then(() => {
+          toast.success("Сотрудник успешно добавлен!");
+          this.$router.push({ name: 'ListEmployee' });
+        });
       }
-      this.$router.push({ name: 'ListEmployee' });
+      
     },
     onCopy() {
+      navigator.clipboard.writeText(this.urlCopy);
       toast.success("Ссылка скопирована!");
     }
   },
@@ -224,6 +295,12 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+  
+  &__templates {
+    min-height: 300px;
+    overflow-y: scroll;
+    max-width: 80%;
   }
 }
 

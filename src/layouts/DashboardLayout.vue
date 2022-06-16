@@ -99,6 +99,8 @@ export default {
     overflow: hidden;
   }
   &__sidebar {
+    position: sticky;
+    top: 0;
     width: 20%;
     height: 100vh;
     max-width: 240px;
@@ -120,6 +122,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
     @media (max-width: v.$medium-screen) {
       width: 90%;
     }
