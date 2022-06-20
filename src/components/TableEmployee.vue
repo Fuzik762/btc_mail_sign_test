@@ -11,6 +11,9 @@
             @click="sortOrder(head.id)"
           >
             {{ head.title }}
+            <img 
+              v-if="head.order"
+              :src="require(`@/assets/icons/${head.order}__icon.svg`)" >
           </th>
         </tr>
       </thead>

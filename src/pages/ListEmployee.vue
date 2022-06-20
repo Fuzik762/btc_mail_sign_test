@@ -22,6 +22,7 @@
           class="toolbar__search-input"
           type="text"
           placeholder="Поиск по ФИО, Должности, email, телефону"
+          @keyup.enter="searchEmployee"
         >
         <DefaultButton
           class="toolbar__search-button"
@@ -100,7 +101,7 @@
       @click="pageChange(currentPage - 1)"
     />
     <div class="pagination__pages">
-      {{ fromRecord }}-{{ toRecord }} из {{ totalPage }}
+      {{ fromRecord }}-{{ toRecord }} из {{ totalCount }}
     </div>
     <button 
       class="pagination__next-page pagination-btn"
@@ -318,6 +319,7 @@ export default {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: inherit;
     height: 16px;
     width: 18px;
     border: none;

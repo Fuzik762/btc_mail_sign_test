@@ -24,7 +24,7 @@
     />
     <DefaultInput
       id="auth_password" 
-      name="password"
+      name="Пароль"
       type="password" 
       label="Пароль" 
       :required="true" 
@@ -52,7 +52,7 @@ export default {
   data() {
     const schema = {
         email: "required|email",
-        password: "required|min:6"
+        'Пароль': "required|min:6"
     };
     
     return {
