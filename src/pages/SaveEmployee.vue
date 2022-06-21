@@ -18,7 +18,7 @@
     <FormValidate 
       class="employee__form"
       :validation-schema="schema"
-      @submit="onSubmit"
+      @submit.once="onSubmit"
     >
       <DataRow> 
         <template #head>
@@ -26,7 +26,7 @@
         </template>
         <DefaultInput
           id="create_name"
-          name="name"
+          name="Имя"
           type="text"
           :required="true"
           placeholder="Фамилия Имя Отчество"
@@ -36,7 +36,7 @@
         />
         <DefaultInput
           id="create_company"
-          name="company"
+          name="Компания"
           type="text"
           :required="true"
           placeholder="БТК (IT)"
@@ -46,7 +46,7 @@
         />
         <DefaultInput
           id="create_position"
-          name="position"
+          name="Должность"
           type="text"
           :required="true"
           placeholder="Разработчик"
@@ -61,7 +61,7 @@
         </template>
         <DefaultInput
           id="create_email"
-          name="email"
+          name="Email"
           type="email"
           :required="true"
           placeholder="Email"
@@ -71,7 +71,7 @@
         />
         <DefaultInput
           id="create_phone"
-          name="phone"
+          name="Телефон"
           type="tel"
           :required="true"
           placeholder="Номер телефона"
@@ -86,7 +86,7 @@
         </template>
         <DefaultInput
           id="edit_status"
-          name="status"
+          name="Статус"
           type="text"
           list="status-list"
           :required="true"
@@ -102,7 +102,7 @@
         </datalist>
         <DefaultInput
           id="edit_vocationEndDate"
-          name="vocationEndDate"
+          name="Дата отпуска"
           type="date"
           :required="true"
           placeholder="Дата"
@@ -117,7 +117,7 @@
         </template>
         <TemplateItem 
           v-for="template in templates"
-          :id="String(template.id)"
+          :id="template.id"
           :key="template.id"
           :html="template.htmlCode"
           :class="{ active : isActive === template.id }"
@@ -154,6 +154,7 @@ import DefaultButton from "@/components/ui/DefaultButton.vue"
 import TemplateItem from "@/components/TemplateItem.vue"
 import DataRow from "@/components/DataRow.vue"
 import IconBase from "@/components/ui/IconBase.vue"
+import { required } from "@vee-validate/rules"
 import { useToast } from "vue-toastification";
 import { GET_EMPLOYEE, GET_TEMPLATES } from "@/graphql/queries"
 import { CREATE_EMPLOYEE, UPDATE_EMPLOYEE } from "@/graphql/mutations"
@@ -192,11 +193,14 @@ export default {
   },
   data() {
     const schema = {
-      name: "required|alpha_spaces",
-      company: "required",
-      position: "required|alpha_spaces",
-      email: "required|email",
-      phone: { regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
+      'Имя': "required|alpha_spaces",
+      'Фамилия': "required",
+      'Компания': "required",
+      'Должность': "required|alpha_spaces",
+      Email: "required|email",
+      'Телефон': { 
+        required,
+        regex: /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ },
     };
 
     return {
@@ -261,7 +265,7 @@ export default {
       
     },
     onCopy() {
-      navigator.clipboard.writeText(this.urlCopy);
+      navigator.clipboard.writeText('https://api.esign-trainees.dev.k8s.btc-s.ru/sign-img/' + this.urlCopy);
       toast.success("Ссылка скопирована!");
     }
   },

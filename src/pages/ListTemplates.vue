@@ -11,17 +11,71 @@
         @click="$router.push({ name: 'CreateTemplates' })"
       />
     </div>
-    <TemplateItem />
-    <TemplateItem />
+    <TemplateItem 
+      v-for="template in templates" 
+      :id="template.id"
+      :key="template.id"
+      :name="template.name"
+      :html="template.htmlCode"
+    />
   </div>
+  <DefaultPagination 
+    :limit-records="limitRecords"
+    :total-count="totalCount"
+    :total-page="totalPage"
+    :current-page="currentPage"
+    @from-record="pageChange($event)"
+  />
 </template>
 
 <script>
 import DefaultButton from '@/components/ui/DefaultButton.vue'
+import DefaultPagination from '@/components/ui/DefaultPagination.vue'
 import TemplateItem from '@/components/TemplateItem.vue'
+import { GET_TEMPLATES } from '@/graphql/queries'
+
 export default {
   name: "ListTemplates",
-  components: { DefaultButton, TemplateItem },
+  components: { DefaultButton, TemplateItem, DefaultPagination },
+  apollo: {
+    templates: {
+      query: GET_TEMPLATES,
+      result({ data }) {
+        if(data) {
+          this.templates = {
+            ...data.getTemplates.templates
+          };
+        }
+      },
+      variables() {
+        return {
+          limit: this.limitRecords,
+        }
+      },
+      update(data) {
+        this.totalPage = Math.ceil(data.getTemplates.totalCount / this.limitRecords)
+        this.totalCount = data.getTemplates.totalCount
+        return data.getTemplates.templatesf
+      }
+    }
+  },
+  data() {
+    return {
+      templates: [],
+      totalPage: 0,
+      totalCount: 0,
+      limitRecords: 3,
+      currentPage: 1,
+    }
+  },
+  methods: {
+    pageChange(currentPage) {
+      this.currentPage = currentPage
+      this.$apollo.queries.templates.refetch({
+        offset: this.limitRecords * (currentPage - 1)
+      })
+    },
+  }
 };
 </script>
 

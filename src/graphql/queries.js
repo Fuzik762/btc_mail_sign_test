@@ -92,3 +92,20 @@ export const GET_TEMPLATES = gql`
     }
   }
 `
+
+export const GET_TEMPLATE = gql`
+  query GetTemplate($id: Int!,) {
+    getTemplate(id: $id,) {
+      status
+      errors {
+        code
+        message
+      }
+      template {
+        id
+        name
+        htmlCode
+      }
+    }
+  }
+`
