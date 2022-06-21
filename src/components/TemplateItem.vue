@@ -2,7 +2,7 @@
   <div class="template">
     <div class="template__head">
       <h4 class="template__head-text">
-        {{ templateHead }}
+        {{ name }}
       </h4>
       <router-link
         v-if="$route.meta.editTemplates"
@@ -30,7 +30,7 @@ export default {
       type: Number,
       default: null,
     },
-    templateHead: {
+    name: {
       type: String,
       default: null,
     }

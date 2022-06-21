@@ -13,7 +13,8 @@
             {{ head.title }}
             <img 
               v-if="head.order"
-              :src="require(`@/assets/icons/${head.order}__icon.svg`)" >
+              :src="require(`@/assets/icons/${head.order}__icon.svg`)" 
+            >
           </th>
         </tr>
       </thead>

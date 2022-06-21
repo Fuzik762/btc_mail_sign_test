@@ -17,7 +17,7 @@
       v-if="isEditPage"
       label="Удалить шаблон" 
       icon-color="delete"
-      @click="deleteTemplate(template.id)"
+      @click.once="deleteTemplate(template.id)"
     />
   </div>
   <form 
@@ -41,7 +41,7 @@
     <DefaultButton
       type="button" 
       label="Сохранить шаблон"
-      @click="onSubmit" 
+      @click.once="onSubmit" 
     />
   </form>
 </template>
